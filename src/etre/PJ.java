@@ -7,6 +7,7 @@ public class PJ extends Humain {
 	int MAG; //magie
 	int ESP; //soins + armure magique
 	int ARM; //armure physique
+	int EXP; //expérience obtenue par le personnage pour la progression de celui-ci
 	
 	/**
 	 * pour l'instant c'est du brouillon
