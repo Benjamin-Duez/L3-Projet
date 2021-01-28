@@ -1,6 +1,6 @@
 package etre;
 
-public class PJ extends Humain {
+public abstract class PJ extends Humain {
 
 	int id;
 	int ATT; //attaque
@@ -22,5 +22,7 @@ public class PJ extends Humain {
 	 *  
 	 *  pareil pour les dégats reçus magique mais par rapport à ESP
 	 */
+	
+	public abstract void attributionStats();
 	
 }
