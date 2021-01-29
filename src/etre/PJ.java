@@ -3,11 +3,11 @@ package etre;
 public abstract class PJ extends Humain {
 
 	int id;
-	int ATT; //attaque
-	int MAG; //magie
-	int ESP; //soins + armure magique
-	int ARM; //armure physique
-	int EXP; //expérience obtenue par le personnage pour la progression de celui-ci
+	int att; //attaque
+	int mag; //magie
+	int esp; //soins + armure magique
+	int arm; //armure physique
+	int exp; //expérience obtenue par le personnage pour la progression de celui-ci
 	
 	/**
 	 * pour l'instant c'est du brouillon
