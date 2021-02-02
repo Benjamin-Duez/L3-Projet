@@ -52,7 +52,7 @@ public class Pretre extends PJ {
 	
 	@Override
 	public String toString() {
-		return "Pretre [id=" + id + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + ", exp=" + exp
-				+ ", argent=" + argent + ", hp=" + hp + ", mp=" + mp + "]";
+		return "Pretre [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", argent=" + argent
+				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
 }

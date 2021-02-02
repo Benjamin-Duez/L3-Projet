@@ -16,10 +16,8 @@ public class Tests {
 		Tank tank = new Tank();
 		tank.attributionStats();
 		System.out.println(tank);
-		tank.levelUp();
-		System.out.println(tank);
-		tank.levelUp();
-		System.out.println(tank);
+		cac.levelUp();
+		System.out.println(cac);
 	}
 
 }
