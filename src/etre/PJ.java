@@ -3,11 +3,9 @@ package etre;
 public abstract class PJ extends Humain {
 
 	int id;
-	int att; //attaque
-	int mag; //magie
-	int esp; //soins + armure magique
-	int arm; //armure physique
 	int exp; //expérience obtenue par le personnage pour la progression de celui-ci
+	int exp_limit; //Si l'expérience dépasse cette variable alors le niveau du personnage augmente
+	int lvl; //Niveau du personnage
 	
 	/**
 	 * pour l'instant c'est du brouillon
@@ -24,5 +22,7 @@ public abstract class PJ extends Humain {
 	 */
 	
 	public abstract void attributionStats();
+	
+	public abstract void levelUp();
 	
 }

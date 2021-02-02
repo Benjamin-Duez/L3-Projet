@@ -4,9 +4,6 @@ public class Tests {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Tank tank = new Tank();
-		tank.attributionStats();
-		System.out.println(tank);
 		Sorcier sorcier = new Sorcier();
 		sorcier.attributionStats();
 		System.out.println(sorcier);
@@ -16,6 +13,13 @@ public class Tests {
 		CaC cac = new CaC();
 		cac.attributionStats();
 		System.out.println(cac);
+		Tank tank = new Tank();
+		tank.attributionStats();
+		System.out.println(tank);
+		tank.levelUp();
+		System.out.println(tank);
+		tank.levelUp();
+		System.out.println(tank);
 	}
 
 }
