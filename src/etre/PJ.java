@@ -6,6 +6,7 @@ public abstract class PJ extends Humain {
 	int exp; //expérience obtenue par le personnage pour la progression de celui-ci
 	int exp_limit; //Si l'expérience dépasse cette variable alors le niveau du personnage augmente
 	int lvl; //Niveau du personnage
+	Arme_Equipable type_arme;
 	
 	/**
 	 * pour l'instant c'est du brouillon
