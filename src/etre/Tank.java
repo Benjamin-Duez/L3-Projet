@@ -9,7 +9,6 @@ public class Tank extends PJ{
 		argent=10;
 		lvl=1;
 		exp_limit=10;
-		type_arme = Arme_Equipable.Epee_Bouclier;
 	}
 	
 	public void attributionStats()

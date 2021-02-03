@@ -1,12 +1,17 @@
 package etre;
 
+import java.util.Map;
+
+import items.Armures;
+import items.Type_Armure;
+
 public abstract class PJ extends Humain {
 
 	int id;
 	int exp; //expérience obtenue par le personnage pour la progression de celui-ci
 	int exp_limit; //Si l'expérience dépasse cette variable alors le niveau du personnage augmente
 	int lvl; //Niveau du personnage
-	Arme_Equipable type_arme;
+	Map<Type_Armure,Armures> equipement;
 	
 	/**
 	 * pour l'instant c'est du brouillon
