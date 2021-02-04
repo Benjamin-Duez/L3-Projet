@@ -14,7 +14,7 @@ public class CaC extends PJ {
 	public void attributionStats()
 	{
 		att = 50 + (int)(Math.random() * ((60 - 50) + 1));
-		mag = 20 + (int)(Math.random() * ((25 - 20) + 1));
+		mag = 15 + (int)(Math.random() * ((25 - 15) + 1));
 		arm = 30 + (int)(Math.random() * ((40 - 30) + 1));
 		esp = 15 + (int)(Math.random() * ((25 - 15) + 1));
 		hp = 35 + (int)(Math.random() * ((45 - 35) + 1));

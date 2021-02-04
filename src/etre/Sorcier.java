@@ -17,7 +17,7 @@ public class Sorcier extends PJ {
 		mag = 55 + (int)(Math.random() * ((65 - 55) + 1));
 		arm = 15 + (int)(Math.random() * ((25 - 15) + 1));
 		esp = 35 + (int)(Math.random() * ((45 - 35) + 1));
-		hp = 20 + (int)(Math.random() * ((30 - 20) + 1));
+		hp = 25 + (int)(Math.random() * ((35 - 25) + 1));
 		mp = 50 + (int)(Math.random() * ((60 - 50) + 1));
 	}
 
