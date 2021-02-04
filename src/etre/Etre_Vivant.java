@@ -2,6 +2,8 @@ package etre;
 
 public abstract class Etre_Vivant {
 
+	static int nbm;
+	static int nbh;
 	int hp;
 	int mp;
 	int att; //attaque

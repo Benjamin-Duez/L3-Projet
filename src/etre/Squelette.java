@@ -1,8 +1,6 @@
 package etre;
 
 public class Squelette extends Monstre {
-
-	int id;
 	
 	public Squelette() {
 		

@@ -27,9 +27,10 @@ public class Tests {
 		
 		Combat comb=new Combat();
 		comb.addJoueur(tank);
+		comb.addJoueur(sorcier);
 		comb.addMonstre(sque);
 		System.out.println(comb);
-		comb.deroulementCombat();
+		comb.deroulementCombat(tank.getId(),sque.getId());
 		System.out.println(comb);
 	}
 
