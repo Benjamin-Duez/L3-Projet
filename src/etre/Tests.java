@@ -26,8 +26,8 @@ public class Tests {
 		System.out.println(sorc);
 		
 		Combat comb=new Combat();
-		comb.ajoutJoueur(tank);
-		comb.ajoutMonstre(sque);
+		comb.addJoueur(tank);
+		comb.addMonstre(sque);
 		System.out.println(comb);
 		comb.deroulementCombat();
 		System.out.println(comb);
