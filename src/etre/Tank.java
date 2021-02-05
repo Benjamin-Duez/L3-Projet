@@ -1,5 +1,7 @@
 package etre;
 
+import java.util.*;
+
 public class Tank extends PJ{
 	
 	public Tank()
@@ -50,10 +52,21 @@ public class Tank extends PJ{
 		exp_limit*=Math.exp(1);
 	}
 
+	public void creationAttaques()
+	{
+		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
+		attaques.put(1, 15);
+		attaques.put(2, 25);
+		attaques.put(3, 35);
+		attaques.put(4, 45);
+	}
+	
 	@Override
 	public String toString() {
-		return "Tank [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", argent=" + argent
-				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
+		return "Tank [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", attaques="
+				+ attaques + ", argent=" + argent + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag
+				+ ", esp=" + esp + ", arm=" + arm + "]";
 	}
+	
 	
 }

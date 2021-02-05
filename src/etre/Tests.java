@@ -17,6 +17,7 @@ public class Tests {
 		System.out.println(cac);
 		Tank tank = new Tank();
 		tank.attributionStats();
+		tank.creationAttaques();
 		System.out.println(tank);
 		cac.levelUp();
 		System.out.println(cac);

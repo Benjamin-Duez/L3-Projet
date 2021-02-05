@@ -1,5 +1,7 @@
 package etre;
 
+import java.util.TreeMap;
+
 public class Sorcier extends PJ {
 
 	public Sorcier()
@@ -48,6 +50,15 @@ public class Sorcier extends PJ {
 		exp=0;
 		lvl++;
 		exp_limit*=Math.exp(1);
+	}
+	
+	public void creationAttaques()
+	{
+		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
+		attaques.put(1, 15);
+		attaques.put(2, 25);
+		attaques.put(3, 35);
+		attaques.put(4, 45);
 	}
 	
 	@Override

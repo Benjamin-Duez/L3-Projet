@@ -12,6 +12,7 @@ public abstract class PJ extends Humain {
 	int exp_limit; //Si l'expérience dépasse cette variable alors le niveau du personnage augmente
 	int lvl; //Niveau du personnage
 	Map<Type_Armure,Armures> equipement;
+	Map<Integer,Integer> attaques;
 	
 	public abstract void attributionStats();
 	
@@ -20,5 +21,11 @@ public abstract class PJ extends Humain {
 	public int getId() {
 		return id;
 	}
+	
+	public Map<Integer, Integer> getAttaques() {
+		return attaques;
+	}
+
+	public abstract void creationAttaques();
 	
 }

@@ -62,13 +62,12 @@ public class Combat {
 			if(monstres.get(indexM).getId()==idM)m=true;
 			else indexM++;
 		}
-		System.out.println(indexJ + " " + indexM);
 		if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 		{
-			if((joueur.get(indexJ).getAtt()%2)==0)monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).getAtt()/2));
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-((joueur.get(indexJ).getAtt()-1)/2));
+			if((joueur.get(indexJ).getAtt()%2)==0)monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).getAtt()/2+joueur.get(indexJ).getAttaques().get(1)));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-((joueur.get(indexJ).getAtt()-1)/2+joueur.get(indexJ).getAttaques().get(1)));
 		}
-		else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).getAtt());
+		else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).getAtt()-joueur.get(indexJ).getAttaques().get(1));
 		if(monstres.get(indexM).getHp()<=0)removeMonstre(indexM);
 	}
 
