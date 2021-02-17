@@ -66,4 +66,10 @@ public class Pretre extends PJ {
 		return "Pretre [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", argent=" + argent
 				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
+	
+	public int calcul_degats_infliges_phys(int choix)
+	{
+		return attaques.get(choix)*att/9;
+		
+	}
 }

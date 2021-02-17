@@ -28,4 +28,6 @@ public abstract class PJ extends Humain {
 
 	public abstract void creationAttaques();
 	
+	public abstract int calcul_degats_infliges_phys(int i);
+	
 }

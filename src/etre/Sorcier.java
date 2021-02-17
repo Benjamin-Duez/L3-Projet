@@ -67,5 +67,10 @@ public class Sorcier extends PJ {
 				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
 	
+	public int calcul_degats_infliges_phys(int choix)
+	{
+		return attaques.get(choix)*att/9;
+		
+	}
 	
 }

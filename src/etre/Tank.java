@@ -55,10 +55,10 @@ public class Tank extends PJ{
 	public void creationAttaques()
 	{
 		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
-		attaques.put(1, 15);
-		attaques.put(2, 25);
-		attaques.put(3, 35);
-		attaques.put(4, 45);
+		attaques.put(1, 2);
+		attaques.put(2, 3);
+		attaques.put(3, 4);
+		attaques.put(4, 5);
 	}
 	
 	@Override
@@ -68,5 +68,17 @@ public class Tank extends PJ{
 				+ ", esp=" + esp + ", arm=" + arm + "]";
 	}
 	
+	public int calcul_degats_infliges_phys(int choix)
+	{
+		int degats=0;
+		switch(choix)
+		{
+		case 1:
+			degats=attaques.get(choix)*(att/9);
+		}
+			
+		System.out.println(degats);
+		return degats;
+	}
 	
 }

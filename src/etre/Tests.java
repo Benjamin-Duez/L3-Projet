@@ -25,14 +25,14 @@ public class Tests {
 		System.out.println(sque);
 		Sorciere sorc = new Sorciere();
 		System.out.println(sorc);
-		
 		Combat comb=new Combat();
 		comb.addJoueur(tank);
 		comb.addJoueur(sorcier);
 		comb.addMonstre(sque);
 		System.out.println(comb);
-		comb.deroulementCombat(tank.getId(),sque.getId());
+		comb.deroulementCombat(tank.getId(),sque.getId(),1);
 		System.out.println(comb);
+		comb.deroulementCombatTour();
 	}
 
 }

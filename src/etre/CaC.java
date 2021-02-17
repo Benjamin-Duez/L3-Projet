@@ -55,16 +55,22 @@ public class CaC extends PJ {
 	public void creationAttaques()
 	{
 		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
-		attaques.put(1, 15);
-		attaques.put(2, 25);
-		attaques.put(3, 35);
-		attaques.put(4, 45);
+		attaques.put(1, 1);
+		attaques.put(2, 2);
+		attaques.put(3, 3);
+		attaques.put(4, 4);
 	}
 	
 	@Override
 	public String toString() {
 		return "CaC [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", argent=" + argent
 				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
+	}
+	
+	public int calcul_degats_infliges_phys(int choix)
+	{
+		return attaques.get(choix)*att/9;
+		
 	}
 	
 }
