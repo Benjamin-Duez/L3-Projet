@@ -59,35 +59,22 @@ public class Combat {
 				System.out.println("Qui voulez-cous attaquez?");
 				Scanner scanner = new Scanner(System.in);
 				int adversaire=scanner.nextInt();
-				System.out.println(adversaire);
 				System.out.println("Avec quelle attaque?");
 				int numero_attaque=scanner.nextInt();
-				System.out.println(numero_attaque);
+				this.deroulementCombat(i,adversaire, numero_attaque);
+				System.out.println(monstres);
 			}
-			monstres.clear();
 		}
 	}
 	
-	public void deroulementCombat(int idJ,int idM,int attaque_choisi)
+	public void deroulementCombat(int indexJ,int indexM,int attaque_choisi)
 	{
-		int indexJ=0,indexM=0;
-		boolean j=false,m=false;
-		while(j==false)
-		{
-			if(joueur.get(indexJ).getId()==idJ)j=true;
-			else indexJ++;
-		}
-		while(m==false)
-		{
-			if(monstres.get(indexM).getId()==idM)m=true;
-			else indexM++;
-		}
 		if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 		{
-			if((joueur.get(indexJ).getAtt()%2)==0)monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges_phys(4));
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-((joueur.get(indexJ).getAtt()-1)/2+joueur.get(indexJ).getAttaques().get(1)));
+			if((joueur.get(indexJ).getAtt()%2)==0)monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-((joueur.get(indexJ).getAtt()-1)/2+joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi)));
 		}
-		else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).getAtt()-joueur.get(indexJ).getAttaques().get(1));
+		else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).getAtt()-joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi));
 		if(monstres.get(indexM).getHp()<=0)removeMonstre(indexM);
 	}
 

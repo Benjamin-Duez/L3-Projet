@@ -77,7 +77,7 @@ public class Tank extends PJ{
 			degats=attaques.get(choix)*(att/9);
 		}
 			
-		System.out.println(degats);
+		System.out.println(degats +" yesy ");
 		return degats;
 	}
 	

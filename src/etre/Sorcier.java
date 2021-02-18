@@ -63,14 +63,22 @@ public class Sorcier extends PJ {
 	
 	@Override
 	public String toString() {
-		return "Sorcier [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", argent=" + argent
-				+ ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
+		return "Sorcier [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", attaques="
+				+ attaques + ", argent=" + argent + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag
+				+ ", esp=" + esp + ", arm=" + arm + "]";
 	}
 	
 	public int calcul_degats_infliges_phys(int choix)
 	{
-		return attaques.get(choix)*att/9;
-		
+		int degats=0;
+		switch(choix)
+		{
+		case 1:
+			degats=attaques.get(choix)*(att/9);
+		}
+			
+		System.out.println(degats);
+		return degats;
 	}
 	
 }

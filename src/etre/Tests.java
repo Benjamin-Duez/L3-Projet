@@ -8,6 +8,7 @@ public class Tests {
 		// TODO Auto-generated method stub
 		Sorcier sorcier = new Sorcier();
 		sorcier.attributionStats();
+		sorcier.creationAttaques();
 		System.out.println(sorcier);
 		Pretre pretre = new Pretre();
 		pretre.attributionStats();
@@ -29,10 +30,10 @@ public class Tests {
 		comb.addJoueur(tank);
 		comb.addJoueur(sorcier);
 		comb.addMonstre(sque);
-		System.out.println(comb);
-		comb.deroulementCombat(tank.getId(),sque.getId(),1);
+		comb.addMonstre(sorc);
 		System.out.println(comb);
 		comb.deroulementCombatTour();
+		System.out.println(comb);
 	}
 
 }
