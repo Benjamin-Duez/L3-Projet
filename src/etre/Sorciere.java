@@ -11,6 +11,7 @@ public class Sorciere extends Monstre {
 		arm = 20;
 		hp = 30;
 		mp = 45;
+		exp_gagne=10;
 		
 	}
 

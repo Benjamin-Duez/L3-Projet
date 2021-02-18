@@ -11,6 +11,7 @@ public class Squelette extends Monstre {
 		arm = 30;
 		hp = 35;
 		mp = 15;
+		exp_gagne=10;
 		
 	}
 

@@ -28,6 +28,18 @@ public abstract class PJ extends Humain {
 
 	public abstract void creationAttaques();
 	
-	public abstract int calcul_degats_infliges_phys(int i);
+	public abstract int calcul_degats_infliges(int i);
+
+	public int getExp() {
+		return exp;
+	}
+
+	public int getExp_limit() {
+		return exp_limit;
+	}
+
+	public void setExp(int exp) {
+		this.exp += exp;
+	}
 	
 }

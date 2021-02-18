@@ -58,10 +58,10 @@ public class Combat {
 			{
 				System.out.println("Qui voulez-cous attaquez?");
 				Scanner scanner = new Scanner(System.in);
-				int adversaire=scanner.nextInt();
+				int adversaire_allie=scanner.nextInt();
 				System.out.println("Avec quelle attaque?");
 				int numero_attaque=scanner.nextInt();
-				this.deroulementCombat(i,adversaire, numero_attaque);
+				this.deroulementCombat(i,adversaire_allie, numero_attaque);
 				System.out.println(monstres);
 			}
 		}
@@ -69,13 +69,34 @@ public class Combat {
 	
 	public void deroulementCombat(int indexJ,int indexM,int attaque_choisi)
 	{
-		if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
+		switch(attaque_choisi)
 		{
-			if((joueur.get(indexJ).getAtt()%2)==0)monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi));
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-((joueur.get(indexJ).getAtt()-1)/2+joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi)));
+		case 1:
+			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
+			{
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges(attaque_choisi));
+			}
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_degats_infliges(attaque_choisi)));
+			break;
+		case 2:
+			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
+			{
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges(attaque_choisi));
+			}
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_degats_infliges(attaque_choisi)));
+			break;
+		case 3:
+			
 		}
-		else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).getAtt()-joueur.get(indexJ).calcul_degats_infliges_phys(attaque_choisi));
-		if(monstres.get(indexM).getHp()<=0)removeMonstre(indexM);
+		if(monstres.get(indexM).getHp()<=0)
+		{
+			for(int i=0;i<joueur.size();i++)
+			{
+				joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
+				if(joueur.get(i).getExp()>=joueur.get(i).getExp_limit())joueur.get(i).levelUp();
+			}
+			removeMonstre(indexM);
+		}
 	}
 
 	@Override

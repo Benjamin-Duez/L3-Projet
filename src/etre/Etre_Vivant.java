@@ -5,7 +5,9 @@ public abstract class Etre_Vivant {
 	static int nbm;
 	static int nbh;
 	int hp;
+	int hp_max;
 	int mp;
+	int mp_max;
 	int att; //attaque
 	int mag; //magie
 	int esp; //soins + armure magique
