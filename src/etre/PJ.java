@@ -11,6 +11,7 @@ public abstract class PJ extends Humain {
 	int exp; //expérience obtenue par le personnage pour la progression de celui-ci
 	int exp_limit; //Si l'expérience dépasse cette variable alors le niveau du personnage augmente
 	int lvl; //Niveau du personnage
+	int bouclier; //Buffer permettant de reduire les degats recus
 	Map<Type_Armure,Armures> equipement;
 	Map<Integer,Integer> attaques;
 	
@@ -28,7 +29,7 @@ public abstract class PJ extends Humain {
 
 	public abstract void creationAttaques();
 	
-	public abstract int calcul_degats_infliges(int i);
+	public abstract int calcul_competence(int i);
 
 	public int getExp() {
 		return exp;
@@ -40,6 +41,14 @@ public abstract class PJ extends Humain {
 
 	public void setExp(int exp) {
 		this.exp += exp;
+	}
+
+	public int getBouclier() {
+		return bouclier;
+	}
+
+	public void setBouclier(int bouclier) {
+		this.bouclier = bouclier;
 	}
 	
 }

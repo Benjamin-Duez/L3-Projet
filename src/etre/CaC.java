@@ -66,14 +66,30 @@ public class CaC extends PJ {
 	@Override
 	public String toString() {
 		return "CaC [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", attaques=" + attaques
-				+ ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max=" + mp_max
+				+ ", bouclier=" + bouclier + ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max=" + mp_max
 				+ ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
 	
-	public int calcul_degats_infliges(int choix)
+	public int calcul_competence(int choix)
 	{
-		return attaques.get(choix)*att/9;
-		
+		int degats_soins=0;
+		switch(choix)
+		{
+		case 1:
+			degats_soins=attaques.get(choix)*((att/10)*9);
+			break;
+		case 2:
+			degats_soins=attaques.get(choix)*((mag/10)*9);
+			break;
+		case 3:
+			degats_soins=attaques.get(choix)*((esp/10)*8)*((mag/10)*1);
+			break;
+		case 4:
+			
+			break;
+		}	
+		System.out.println(degats_soins);
+		return degats_soins;
 	}
 	
 }

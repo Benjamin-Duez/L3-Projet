@@ -15,6 +15,7 @@ public class Tests {
 		System.out.println(pretre);
 		CaC cac = new CaC();
 		cac.attributionStats();
+		cac.creationAttaques();
 		System.out.println(cac);
 		Tank tank = new Tank();
 		tank.attributionStats();
@@ -28,7 +29,7 @@ public class Tests {
 		System.out.println(sorc);
 		Combat comb=new Combat();
 		comb.addJoueur(tank);
-		comb.addJoueur(sorcier);
+		comb.addJoueur(cac);
 		comb.addMonstre(sque);
 		comb.addMonstre(sorc);
 		System.out.println(comb);

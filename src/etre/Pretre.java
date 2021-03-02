@@ -66,11 +66,11 @@ public class Pretre extends PJ {
 	@Override
 	public String toString() {
 		return "Pretre [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", attaques="
-				+ attaques + ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max="
+				+ attaques + ", bouclier=" + bouclier +  ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max="
 				+ mp_max + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
 	
-	public int calcul_degats_infliges(int choix)
+	public int calcul_competence(int choix)
 	{
 		return attaques.get(choix)*att/9;
 		

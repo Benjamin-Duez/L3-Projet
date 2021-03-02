@@ -49,5 +49,17 @@ public abstract class Etre_Vivant {
 	public int getArm() {
 		return arm;
 	}
+	public int getHp_max() {
+		return hp_max;
+	}
+	public int getMp_max() {
+		return mp_max;
+	}
+	public void setHp_max(int hp_max) {
+		this.hp_max = hp_max;
+	}
+	public void setMp_max(int mp_max) {
+		this.mp_max = mp_max;
+	}
 	
 }

@@ -51,42 +51,59 @@ public class Combat {
 	
 	public void deroulementCombatTour()
 	{
-		int i=0,j=0;
+		int tour=1,i=0,j=0;
 		while(!joueur.isEmpty()&!monstres.isEmpty())
 		{
 			for(i=0;i<joueur.size();i++)
 			{
-				System.out.println("Qui voulez-cous attaquez?");
-				Scanner scanner = new Scanner(System.in);
-				int adversaire_allie=scanner.nextInt();
-				System.out.println("Avec quelle attaque?");
-				int numero_attaque=scanner.nextInt();
-				this.deroulementCombat(i,adversaire_allie, numero_attaque);
-				System.out.println(monstres);
+				if(!monstres.isEmpty())
+				{
+					System.out.println("Quelle competence voulez-vous utilisez?");
+					Scanner scanner = new Scanner(System.in);
+					int numero_competence=scanner.nextInt();
+					if(numero_competence==1||numero_competence==2) 
+					{
+						System.out.println("Qui voulez-vous attaquez?");
+						int adversaire=scanner.nextInt();
+						this.deroulementCombatAttaque(i,adversaire, numero_competence);
+					}
+					else if(numero_competence==3)
+					{
+						System.out.println("Qui voulez-vous soignez?");
+						int allie=scanner.nextInt();
+						this.deroulementCombatSoin(i,allie, numero_competence);
+					}
+					else if(numero_competence==4)
+					{
+						joueur.get(i).setBouclier(joueur.get(i).calcul_competence(numero_competence));
+					}
+					System.out.println(monstres);
+					
+				}
 			}
 		}
+		joueur.forEach(item->System.out.println(item));
+		joueur.forEach(item->item.setBouclier(0));
 	}
 	
-	public void deroulementCombat(int indexJ,int indexM,int attaque_choisi)
+	public void deroulementCombatAttaque(int indexJ,int indexM,int competence_choisi)
 	{
-		switch(attaque_choisi)
+		switch(competence_choisi)
 		{
 		case 1:
 			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges(attaque_choisi));
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_degats_infliges(attaque_choisi)));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_competence(competence_choisi)));
 			break;
 		case 2:
 			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_degats_infliges(attaque_choisi));
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_degats_infliges(attaque_choisi)));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_competence(competence_choisi)));
 			break;
-		case 3:
-			
 		}
 		if(monstres.get(indexM).getHp()<=0)
 		{
@@ -99,6 +116,17 @@ public class Combat {
 		}
 	}
 
+	public void deroulementCombatSoin(int indexJ1,int indexJ2,int competence_choisi)
+	{
+		if(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi)>joueur.get(indexJ2).getHp_max()) 
+		{
+			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp_max());
+		}
+		else {
+			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi));
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return "Combat [joueur=" + joueur + ", monstres=" + monstres + "]";

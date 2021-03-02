@@ -65,31 +65,32 @@ public class Tank extends PJ{
 	
 	@Override
 	public String toString() {
-		return "Tank [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", attaques="
-				+ attaques + ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max="
-				+ mp_max + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
+		return "Tank [id=" + id + ", exp=" + exp + ", exp_limit=" + exp_limit + ", lvl=" + lvl + ", bouclier="
+				+ bouclier + ", attaques=" + attaques + ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max
+				+ ", mp=" + mp + ", mp_max=" + mp_max + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm="
+				+ arm + "]";
 	}
 	
-	public int calcul_degats_infliges(int choix)
+	public int calcul_competence(int choix)
 	{
-		int degats_soins=0;
+		int degats_soins_bouclier=0;
 		switch(choix)
 		{
 		case 1:
-			degats_soins=attaques.get(choix)*((att/10)*9);
+			degats_soins_bouclier=attaques.get(choix)*((att/10)*9);
 			break;
 		case 2:
-			degats_soins=attaques.get(choix)*((mag/10)*9);
+			degats_soins_bouclier=attaques.get(choix)*((mag/10)*9);
 			break;
 		case 3:
-			degats_soins=attaques.get(choix)*((esp/10)*8)*((mag/10)*1);
+			degats_soins_bouclier=attaques.get(choix)*((esp/10)*8)*((mag/10)*1);
 			break;
 		case 4:
-			
+			degats_soins_bouclier=attaques.get(choix)*(arm/2)*(esp/2);
 			break;
 		}	
-		System.out.println(degats_soins);
-		return degats_soins;
+		System.out.println(degats_soins_bouclier);
+		return degats_soins_bouclier;
 	}
 	
 }
