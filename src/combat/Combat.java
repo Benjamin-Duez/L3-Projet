@@ -54,6 +54,8 @@ public class Combat {
 		int tour=1,i=0,j=0;
 		while(!joueur.isEmpty()&!monstres.isEmpty())
 		{
+			System.out.println("Debut du tour " + tour);
+			joueur.forEach(item->item.setBouclier(0));
 			for(i=0;i<joueur.size();i++)
 			{
 				if(!monstres.isEmpty())
@@ -82,8 +84,6 @@ public class Combat {
 				}
 			}
 		}
-		joueur.forEach(item->System.out.println(item));
-		joueur.forEach(item->item.setBouclier(0));
 	}
 	
 	public void deroulementCombatAttaque(int indexJ,int indexM,int competence_choisi)
@@ -109,8 +109,13 @@ public class Combat {
 		{
 			for(int i=0;i<joueur.size();i++)
 			{
-				joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
-				if(joueur.get(i).getExp()>=joueur.get(i).getExp_limit())joueur.get(i).levelUp();
+				if(monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp()>=joueur.get(i).getExp_limit())
+				{
+					joueur.get(i).setExp((monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp())-joueur.get(i).getExp_limit());
+					System.out.println(monstres.get(indexM).getExp_gagne());
+					joueur.get(i).levelUp();
+				}
+				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp());
 			}
 			removeMonstre(indexM);
 		}

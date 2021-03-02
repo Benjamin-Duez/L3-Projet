@@ -49,7 +49,6 @@ public class Sorcier extends PJ {
 			mag+=3;hp_max+=2;mp_max+=2;esp+=2;arm+=1;
 			break;
 		}
-		exp=0;
 		lvl++;
 		exp_limit*=Math.exp(1);
 	}

@@ -49,7 +49,6 @@ public class Tank extends PJ{
 			arm+=3;hp_max+=2;att+=1;mp_max+=1;esp+=2;mag+=1;
 			break;
 		}
-		exp=0;
 		lvl++;
 		exp_limit*=Math.exp(1);
 	}
