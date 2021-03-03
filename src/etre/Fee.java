@@ -11,7 +11,7 @@ public class Fee extends Monstre {
 		arm = 10;
 		hp = 20;
 		mp = 30;
-		
+		exp_gagne=12;
 	}
 
 	@Override

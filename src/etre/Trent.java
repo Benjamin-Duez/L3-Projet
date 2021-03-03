@@ -11,7 +11,7 @@ public class Trent extends Monstre {
 		arm = 50;
 		hp = 50;
 		mp = 20;
-		
+		exp_gagne=17;
 	}
 
 	@Override

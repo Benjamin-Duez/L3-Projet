@@ -12,6 +12,8 @@ public abstract class Etre_Vivant {
 	int mag; //magie
 	int esp; //soins + armure magique
 	int arm; //armure physique
+	int bouclier; //Buffer permettant de reduire les degats recus
+
 	
 	public void setHp(int hp) {
 		this.hp = hp;

@@ -80,9 +80,19 @@ public class Combat {
 						joueur.get(i).setBouclier(joueur.get(i).calcul_competence(numero_competence));
 					}
 					System.out.println(monstres);
-					
 				}
 			}
+			for(j=0;j<monstres.size();j++)
+			{
+				if(!joueur.isEmpty())
+				{
+					int adversaire_choisi= (int)(Math.random() * joueur.size());
+					int competence_alea= 1+ (int)(Math.random() * 4);
+					System.out.println("La competence choisi est la suivante :" +competence_alea);
+					joueur.get(adversaire_choisi).setHp(joueur.get(adversaire_choisi).getHp()-monstres.get(j).calcul_competence(competence_alea));
+				}
+			}
+			tour++;
 		}
 	}
 	
@@ -109,16 +119,16 @@ public class Combat {
 		{
 			for(int i=0;i<joueur.size();i++)
 			{
-				if(monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp()>=joueur.get(i).getExp_limit())
+				if((monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp())>=joueur.get(i).getExp_limit())
 				{
-					joueur.get(i).setExp((monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp())-joueur.get(i).getExp_limit());
-					System.out.println(monstres.get(indexM).getExp_gagne());
+					joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()-joueur.get(i).getExp_limit());
 					joueur.get(i).levelUp();
 				}
-				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp());
+				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
 			}
 			removeMonstre(indexM);
 		}
+		System.out.println(joueur);
 	}
 
 	public void deroulementCombatSoin(int indexJ1,int indexJ2,int competence_choisi)

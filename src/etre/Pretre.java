@@ -68,10 +68,5 @@ public class Pretre extends PJ {
 				+ attaques + ", bouclier=" + bouclier +  ", argent=" + argent + ", hp=" + hp + ", hp_max=" + hp_max + ", mp=" + mp + ", mp_max="
 				+ mp_max + ", att=" + att + ", mag=" + mag + ", esp=" + esp + ", arm=" + arm + "]";
 	}
-	
-	public int calcul_competence(int choix)
-	{
-		return attaques.get(choix)*att/9;
-		
-	}
+
 }
