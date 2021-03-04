@@ -86,10 +86,13 @@ public class Combat {
 			{
 				if(!joueur.isEmpty())
 				{
-					int adversaire_choisi= (int)(Math.random() * joueur.size());
+					int adversaire_choisi= (int)(Math.random() * joueur.size()-1);
 					int competence_alea= 1+ (int)(Math.random() * 4);
 					System.out.println("La competence choisi est la suivante :" +competence_alea);
-					joueur.get(adversaire_choisi).setHp(joueur.get(adversaire_choisi).getHp()-monstres.get(j).calcul_competence(competence_alea));
+					if(joueur.get(adversaire_choisi).getBouclier()<monstres.get(j).calcul_competence(competence_alea))
+					{
+						joueur.get(adversaire_choisi).setHp((joueur.get(adversaire_choisi).getHp()+joueur.get(adversaire_choisi).getBouclier())-monstres.get(j).calcul_competence(competence_alea));
+					}
 				}
 			}
 			tour++;

@@ -1,5 +1,5 @@
 package items;
 
-public class Consommables{
+public class Consommables extends Item{
 
 }
