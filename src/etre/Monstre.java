@@ -31,7 +31,6 @@ public abstract class Monstre extends Etre_Vivant {
 			degats_soins_bouclier=(arm/2)*(esp/2);
 			break;
 		}	
-		System.out.println("calcul de la competence " + degats_soins_bouclier);
 		return degats_soins_bouclier;
 	}
 	

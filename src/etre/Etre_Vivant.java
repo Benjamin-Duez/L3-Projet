@@ -64,4 +64,12 @@ public abstract class Etre_Vivant {
 		this.mp_max = mp_max;
 	}
 	
+	public int getBouclier() {
+		return bouclier;
+	}
+
+	public void setBouclier(int bouclier) {
+		this.bouclier = bouclier;
+	}
+	
 }

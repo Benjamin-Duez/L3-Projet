@@ -1,7 +1,6 @@
 package etre;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import items.Armes;
 import items.Armures;
@@ -25,11 +24,7 @@ public abstract class PJ extends Humain {
 		return id;
 	}
 	
-	public void ajoutEquipement() 
-	{
-		if(equipement==null)equipement=new TreeMap<Type_Armure,Armures>();
-		equipement=
-	}
+	
 	
 	public Map<Integer, Integer> getAttaques() {
 		return attaques;
@@ -69,14 +64,6 @@ public abstract class PJ extends Humain {
 
 	public void setExp(int exp) {
 		this.exp += exp;
-	}
-
-	public int getBouclier() {
-		return bouclier;
-	}
-
-	public void setBouclier(int bouclier) {
-		this.bouclier = bouclier;
 	}
 	
 }

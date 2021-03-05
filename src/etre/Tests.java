@@ -36,5 +36,4 @@ public class Tests {
 		comb.deroulementCombatTour();
 		System.out.println(comb);
 	}
-
 }

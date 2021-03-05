@@ -67,39 +67,48 @@ public class Combat {
 					{
 						System.out.println("Qui voulez-vous attaquez?");
 						int adversaire=scanner.nextInt();
-						this.deroulementCombatAttaque(i,adversaire, numero_competence);
+						this.deroulementCombatAttaqueJ(i,adversaire, numero_competence);
 					}
 					else if(numero_competence==3)
 					{
 						System.out.println("Qui voulez-vous soignez?");
 						int allie=scanner.nextInt();
-						this.deroulementCombatSoin(i,allie, numero_competence);
+						this.deroulementCombatSoinJ(i,allie, numero_competence);
 					}
 					else if(numero_competence==4)
 					{
 						joueur.get(i).setBouclier(joueur.get(i).calcul_competence(numero_competence));
 					}
-					System.out.println(monstres);
 				}
 			}
+			monstres.forEach(item->item.setBouclier(0));
 			for(j=0;j<monstres.size();j++)
 			{
 				if(!joueur.isEmpty())
 				{
-					int adversaire_choisi= (int)(Math.random() * joueur.size()-1);
-					int competence_alea= 1+ (int)(Math.random() * 4);
-					System.out.println("La competence choisi est la suivante :" +competence_alea);
-					if(joueur.get(adversaire_choisi).getBouclier()<monstres.get(j).calcul_competence(competence_alea))
+					int competence_alea= 1 + (int)(Math.random() * ((4 - 1) + 1));
+					if(competence_alea==1||competence_alea==2) 
 					{
-						joueur.get(adversaire_choisi).setHp((joueur.get(adversaire_choisi).getHp()+joueur.get(adversaire_choisi).getBouclier())-monstres.get(j).calcul_competence(competence_alea));
+						int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
+						this.deroulementCombatAttaqueM(j,adversaire_choisi, competence_alea);
+					}
+					else if(competence_alea==3)
+					{
+						int allie_choisi= (int)(Math.random() * ((monstres.size()-1) + 1));
+						this.deroulementCombatSoinM(j,allie_choisi, competence_alea);
+					}
+					else if(competence_alea==4)
+					{
+						monstres.get(j).setBouclier(monstres.get(j).calcul_competence(competence_alea));
 					}
 				}
 			}
+			System.out.println(this);
 			tour++;
 		}
 	}
 	
-	public void deroulementCombatAttaque(int indexJ,int indexM,int competence_choisi)
+	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi)
 	{
 		switch(competence_choisi)
 		{
@@ -131,10 +140,32 @@ public class Combat {
 			}
 			removeMonstre(indexM);
 		}
-		System.out.println(joueur);
 	}
 
-	public void deroulementCombatSoin(int indexJ1,int indexJ2,int competence_choisi)
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea)
+	{
+		switch(competence_alea)
+		{
+		case 1:
+			if(joueur.get(indexJ).getArm()>=monstres.get(indexM).getAtt())
+			{
+				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+			}
+			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(2*monstres.get(indexM).calcul_competence(competence_alea)));
+			break;
+		case 2:
+			if(joueur.get(indexJ).getEsp()>=monstres.get(indexM).getMag())
+			{
+				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+			}
+			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(2*monstres.get(indexM).calcul_competence(competence_alea)));
+			break;
+		}
+		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ);
+	}
+
+	
+	public void deroulementCombatSoinJ(int indexJ1,int indexJ2,int competence_choisi)
 	{
 		if(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi)>joueur.get(indexJ2).getHp_max()) 
 		{
@@ -142,6 +173,17 @@ public class Combat {
 		}
 		else {
 			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi));
+		}
+	}
+	
+	public void deroulementCombatSoinM(int indexM1,int indexM2,int competence_alea)
+	{
+		if(monstres.get(indexM2).getHp()+monstres.get(indexM1).calcul_competence(competence_alea)>monstres.get(indexM2).getHp_max()) 
+		{
+			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp_max());
+		}
+		else {
+			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp()+monstres.get(indexM1).calcul_competence(competence_alea));
 		}
 	}
 	
