@@ -16,13 +16,19 @@ public class Anim extends Transition {
 	private PersoImg p;
 	private int count=4;
 	private int lastIndex;
+	private boolean b;
 	
 	public Anim (ImageView imageView,PersoImg p,String d){
 		this.imageView=imageView;
 		this.p=p;
 		direction=d;
-		System.out.println(this.p);
-		setCycleDuration(Duration.millis(750));
+		b=true;
+        this.imageView.setOpacity(0);
+        Rectangle2D r=new Rectangle2D(48,0,48,48);
+	    imageView.setViewport(r);
+	    p.getCase().setX(p.getCase().getX()+6);
+	    imageView.setOpacity(1);
+		setCycleDuration(Duration.millis(500));
         setInterpolator(Interpolator.LINEAR);
 	}
 	public void setDirection(String d) {
@@ -32,6 +38,9 @@ public class Anim extends Transition {
 	protected void interpolate(double k) {
 	       int index = Math.min((int) Math.floor(k * count), count - 1);
 	       Rectangle2D r;
+	       if(b) {
+	       b=false;
+	       }
 	       if (index != lastIndex) {
 	           switch(direction) {
 	           	case "z":
@@ -146,11 +155,6 @@ public class Anim extends Transition {
 	           			break;
 	           		}
 	           		break;
-	           		default:
-	           			r=new Rectangle2D(48,0,48,48);
-	           			imageView.setViewport(r);
-	           			p.getCase().setX(p.getCase().getX()+6);
-	           			break;
 	           }
 	           lastIndex = index;
 	       }

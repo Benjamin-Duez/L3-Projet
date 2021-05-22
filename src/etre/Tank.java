@@ -56,10 +56,10 @@ public class Tank extends PJ{
 	public void creationAttaques()
 	{
 		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
-		attaques.put(1, 4);
+		attaques.put(1, 10);
 		attaques.put(2, 2);
 		attaques.put(3, 2);
-		attaques.put(4, 5);
+		attaques.put(4, 15);
 	}
 	
 	@Override

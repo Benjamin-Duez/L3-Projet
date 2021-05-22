@@ -17,7 +17,7 @@ public class PersoImg {
 	public PersoImg(String nom) {
 		String dossierURL = System.getProperty("user.dir") ;
 		this.nom=nom;
-		imgUrl=new File(dossierURL+"/perso/"+this.nom).toURI().toString();
+		imgUrl=new File(dossierURL+"/img/perso/"+this.nom).toURI().toString();
 		c= new Case(0,0);
 		c.setColor();
 		b=true;
@@ -26,7 +26,7 @@ public class PersoImg {
 	public PersoImg(String nom, Case c) {
 		String dossierURL = System.getProperty("user.dir") ;
 		this.nom=nom;
-		imgUrl=new File(dossierURL+"/perso/"+nom).toURI().toString();
+		imgUrl=new File(dossierURL+"/img/perso/"+nom).toURI().toString();
 		this.c = new Case(c.getX(),c.getY());
 		c.setColor();
 		b=true;
