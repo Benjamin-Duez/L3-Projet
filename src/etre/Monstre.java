@@ -19,16 +19,16 @@ public abstract class Monstre extends Etre_Vivant {
 		switch(choix)
 		{
 		case 1:
-			degats_soins_bouclier=(att/10)*9;
+			degats_soins_bouclier=att/2;
 			break;
 		case 2:
-			degats_soins_bouclier=(mag/10)*9;
+			degats_soins_bouclier=mag/2;
 			break;
 		case 3:
-			degats_soins_bouclier=((esp/10)*8)*((mag/10)*1);
+			degats_soins_bouclier=(esp/4)+(mag/4);
 			break;
 		case 4:
-			degats_soins_bouclier=(arm/2)*(esp/2);
+			degats_soins_bouclier=(arm/3)+(esp/3);
 			break;
 		}	
 		return degats_soins_bouclier;

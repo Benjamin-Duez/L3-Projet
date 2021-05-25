@@ -115,16 +115,16 @@ public class Combat {
 		case 1:
 			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_competence(competence_choisi)));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			break;
 		case 2:
 			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(2*joueur.get(indexJ).calcul_competence(competence_choisi)));
+			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			break;
 		}
 		if(monstres.get(indexM).getHp()<=0)
@@ -149,16 +149,16 @@ public class Combat {
 		case 1:
 			if(joueur.get(indexJ).getArm()>=monstres.get(indexM).getAtt())
 			{
-				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(monstres.get(indexM).calcul_competence(competence_alea))/2);
 			}
-			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(2*monstres.get(indexM).calcul_competence(competence_alea)));
+			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
 			break;
 		case 2:
 			if(joueur.get(indexJ).getEsp()>=monstres.get(indexM).getMag())
 			{
-				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(monstres.get(indexM).calcul_competence(competence_alea))/2);
 			}
-			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(2*monstres.get(indexM).calcul_competence(competence_alea)));
+			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
 			break;
 		}
 		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ);

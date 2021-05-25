@@ -44,10 +44,10 @@ public abstract class PJ extends Humain {
 			degats_soins_bouclier=attaques.get(choix)*(mag/10);
 			break;
 		case 3:
-			degats_soins_bouclier=attaques.get(choix)*(esp/10)*(mag/10);
+			degats_soins_bouclier=attaques.get(choix)*((esp/10)+(mag/10));
 			break;
 		case 4:
-			degats_soins_bouclier=attaques.get(choix)*(arm/10)*(esp/10);
+			degats_soins_bouclier=attaques.get(choix)*((arm/10)+(esp/10));
 			break;
 		}	
 		System.out.println("calcul de la competence " + degats_soins_bouclier);

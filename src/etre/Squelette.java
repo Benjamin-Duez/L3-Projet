@@ -5,7 +5,7 @@ public class Squelette extends Monstre {
 	public Squelette() {
 		
 		id = ++nbm;
-		att = 40;
+		att = 50;
 		mag = 15;
 		esp = 20;
 		arm = 30;

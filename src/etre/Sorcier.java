@@ -57,8 +57,8 @@ public class Sorcier extends PJ {
 	{
 		if(attaques==null)attaques=new TreeMap<Integer,Integer>();
 		attaques.put(1, 2);
-		attaques.put(2, 15);
-		attaques.put(3, 10);
+		attaques.put(2, 5);
+		attaques.put(3, 4);
 		attaques.put(4, 2);
 	}
 	
