@@ -12,13 +12,13 @@ import javafx.scene.text.Text;
 
 public class Bouton {
 
-	final private String dossierURL = System.getProperty("user.dir") ;
-	private ImageView imgV;
-	private Image enter;
-	private Image pressed;
-	private Text t;
-	private int x,y;
-	private boolean b;
+	final protected String dossierURL = System.getProperty("user.dir") ;
+	protected ImageView imgV;
+	protected Image enter;
+	protected Image pressed;
+	protected Text t;
+	protected int x,y;
+	protected boolean b;
 
 	
 	public Bouton(Pane root,String text, int x, int y) {
@@ -41,7 +41,10 @@ public class Bouton {
 		
 		root.getChildren().add(imgV);
 		root.getChildren().add(t);
-		
+		mouseEvent();
+	}
+	
+	protected void mouseEvent() {
 		imgV.setOnMouseEntered(e->mouseEnter());
 		imgV.setOnMouseExited(e2->mouseExited());
 		imgV.setOnMousePressed(e3->mousePressed());
@@ -64,6 +67,7 @@ public class Bouton {
 	}
 	
 	public void mouseReleased() {
+		System.out.println(t.getText());
 		imgV.setImage(enter);
 		b=false;
 	}
