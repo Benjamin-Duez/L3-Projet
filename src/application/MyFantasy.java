@@ -4,10 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import gui.Bouton;
+import gui.BoutonMonstre;
+import gui.BoutonPerso;
 import gui.Case;
 import gui.PersoImg;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -39,6 +42,8 @@ public class MyFantasy extends Application{
 	private Case[][] tab = new Case[17][13];
 	
 	private ArrayList <Bouton> tabB;
+	private ArrayList <BoutonMonstre> tabM;
+	private ArrayList <BoutonPerso> tabP;
 	
 	
 	public void start(Stage primaryStage) {
@@ -48,10 +53,11 @@ public class MyFantasy extends Application{
 		dimw=17;
 		d="";
 		primaryStage.setTitle("MyFantasy");
+		primaryStage.getIcons().add(new Image(new File(dossierURL+"/img/Interface/icon.png").toURI().toString()));
 		afficheCombat(primaryStage);
     }
 	
-	void afficheMap(Stage primaryStage) {
+/*	void afficheMap(Stage primaryStage) {
 		
 		root=new Pane();
 
@@ -74,7 +80,7 @@ public class MyFantasy extends Application{
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
+	}*/
 	
 	void afficheCombat(Stage primaryStage) {
 		
@@ -85,8 +91,13 @@ public class MyFantasy extends Application{
 		ImageView imageview=new ImageView(image);
 		root.getChildren().setAll(imageview);
 		tabB=new ArrayList<Bouton>();
+		tabM=new ArrayList<BoutonMonstre>();
+		tabP=new ArrayList<BoutonPerso>();
 		
 		Scene scene= new Scene(root,width,height);
+		imageURL=new File(dossierURL+"/img/Interface/pointer.png").toURI().toString();
+		Image p =new Image(imageURL);
+		scene.setOnMouseEntered(e->scene.setCursor(new ImageCursor(p)));
 		phase=0;
 		afficheUI();
 
@@ -95,26 +106,6 @@ public class MyFantasy extends Application{
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}
-	
-	public void Action() {
-		if(phase==0) {
-			System.out.println("phase 0 passée");
-			for(Bouton val:tabB){
-				val.setMouseTransparent(false);
-			}
-			phase+=1;
-		}
-		else if(phase==1) {
-		Bouton b=null;
-		for(Bouton val:tabB){
-			if(val.isPressed())b=val;
-		}
-		if(b!=null) {
-				String s=b.getText();
-				b.getImgV().setOnMouseReleased(e->System.out.println(s));
-			}
-		}
 	}
 	
 	void placeCase() {
@@ -133,13 +124,13 @@ public class MyFantasy extends Application{
 		p=new PersoImg("perso1",c);
 	}
 	
-	void annimation(String t) {
+/*	void annimation(String t) {
 		animation.lancerAnim(t);
 	}
 	
 	public void stop() {
 		animation.pause();
-	}
+	}*/
 	
 	void afficheUI() {
 		String imageURL=new File(dossierURL+"/img/Interface/ui2.png").toURI().toString();
@@ -157,6 +148,45 @@ public class MyFantasy extends Application{
 		b=new Bouton(root,"Défense",25,590);
 		tabB.add(b);
 		
+		BoutonMonstre m=new BoutonMonstre(root, 200, 300, "warg");
+		tabM.add(m);
+		m=new BoutonMonstre(root, 200, 400, "skully");
+		tabM.add(m);
+		m=new BoutonMonstre(root, 100, 300, "unicorn");
+		tabM.add(m);
+		m=new BoutonMonstre(root, 100, 400, "watch");
+		tabM.add(m);
+	}
+	
+	public void Action() {
+		if(phase==0) {
+			System.out.println("phase 0 passée");
+			for(Bouton val:tabB){
+				val.setMouseTransparent(false);
+			}
+			phase+=1;
+		}
+		else if(phase==1) {
+		Bouton b=null;
+		for(Bouton val:tabB){
+			if(val.isPressed())b=val;
+		}
+		if(b!=null) {
+				for(Bouton val:tabM){
+					val.setMouseTransparent(false);
+				}
+				phase+=1;
+			}
+		}
+		else if(phase==2) {
+		Bouton b=null;
+		for(Bouton val:tabM){
+			if(val.isPressed())b=val;
+		}
+		if(b!=null) {
+				phase+=1;
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
