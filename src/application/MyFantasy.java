@@ -297,15 +297,20 @@ public class MyFantasy extends Application{
 	
 	public void Tue(String c) {
 		AnimMort anim;
+		AnimDegat anim2;
 		switch (c)
 		{
 		case "m":
 			anim=new AnimMortM(tabM.get(0).getImgV());
+			anim2=new AnimDegat(root,"-9999",tabM.get(0).getImgV(),"monstre");
+			anim2.lancerAnim();
 			anim.lancerAnim();
 			tabM.get(0).Meurt();
 			break;
 		case "p":
 			anim=new AnimMortP(tabP.get(1).getImgV());
+			anim2=new AnimDegat(root,"-9999",tabP.get(1).getImgV(),"perso");
+			anim2.lancerAnim();
 			anim.lancerAnim();
 			tabP.get(1).Meurt();
 			break;
