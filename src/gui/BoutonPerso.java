@@ -25,6 +25,7 @@ public class BoutonPerso extends BoutonEtre {
 		pointer.setMouseTransparent(true);
 		pointer.setOpacity(0);pointer.setX(x+12);pointer.setY(y-50);
 		t.setOpacity(0);
+		vivant=true;o=false;
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class BoutonPerso extends BoutonEtre {
 		inter.setImage(new Image(new File(dossierURL+"/img/Interface/button4.png").toURI().toString()));
 	}
 	
-	public boolean getB() {
-		return b;
+	public void setOccupe(boolean bool) {
+		o=bool;
 	}
 }

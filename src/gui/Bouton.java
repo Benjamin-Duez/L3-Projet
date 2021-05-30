@@ -71,7 +71,8 @@ public class Bouton {
 	}
 	
 	public boolean isPressed() {
-		return b;
+		if(b) {b=false;return true;}
+		else return false;
 	}
 	
 	public ImageView getImgV() {

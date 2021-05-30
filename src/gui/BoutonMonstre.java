@@ -22,6 +22,7 @@ public class BoutonMonstre extends BoutonEtre {
 		pointer.setMouseTransparent(true);
 		pointer.setOpacity(0);pointer.setX(x+25);pointer.setY(y-50);
 		t.setOpacity(0);
+		vivant=true;o=false;
 	}
 	
 	@Override

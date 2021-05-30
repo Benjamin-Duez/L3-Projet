@@ -8,10 +8,12 @@ public abstract class BoutonEtre extends Bouton  {
 	protected String nom;
 	public ImageView pointer;
 	protected boolean vivant;
+	protected boolean o;
 	
 	public BoutonEtre(Pane root, String text, int x, int y,String nom) {
 		super(root, text, x, y);
 		vivant=true;
+		o=false;
 		this.nom=nom;
 	}
 	
@@ -28,6 +30,9 @@ public abstract class BoutonEtre extends Bouton  {
 		b=true;
 	}
 	
+	public boolean isOccupe() {
+		return o;
+	}
 	@Override
 	public void mouseReleased() {
 		System.out.println(t.getText());
@@ -41,6 +46,10 @@ public abstract class BoutonEtre extends Bouton  {
 	@Override
 	public void mouseExited() {
 		pointer.setOpacity(0);
+	}
+	
+	public String getNom() {
+		return nom;
 	}
 
 }
