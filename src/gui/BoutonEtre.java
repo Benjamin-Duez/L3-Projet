@@ -7,10 +7,40 @@ public abstract class BoutonEtre extends Bouton  {
 
 	protected String nom;
 	public ImageView pointer;
+	protected boolean vivant;
 	
 	public BoutonEtre(Pane root, String text, int x, int y,String nom) {
 		super(root, text, x, y);
+		vivant=true;
 		this.nom=nom;
 	}
 	
+	public void Meurt() {
+		vivant=false;
+	}
+	
+	public boolean isVivant() {
+		return vivant;
+	}
+	
+	@Override
+	public void mousePressed() {
+		b=true;
+	}
+	
+	@Override
+	public void mouseReleased() {
+		System.out.println(t.getText());
+	}
+	
+	@Override
+	public void mouseEnter() {
+		pointer.setOpacity(1);
+	}
+	
+	@Override
+	public void mouseExited() {
+		pointer.setOpacity(0);
+	}
+
 }

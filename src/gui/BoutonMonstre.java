@@ -19,28 +19,13 @@ public class BoutonMonstre extends BoutonEtre {
 		imgV.setImage(new Image(new File(dossierURL+"/img/mob/"+this.type+".png").toURI().toString(),100,100,false,false));
 		imgV.setOpacity(1);
 		root.getChildren().add(pointer);
+		pointer.setMouseTransparent(true);
 		pointer.setOpacity(0);pointer.setX(x+25);pointer.setY(y-50);
 		t.setOpacity(0);
 	}
 	
 	@Override
-	public void mousePressed() {
-		b=true;
-	}
-	
-	@Override
 	public void mouseReleased() {
 		System.out.println(nom+": "+t.getText());
-		b=false;
-	}
-	
-	@Override
-	public void mouseEnter() {
-		pointer.setOpacity(1);
-	}
-	
-	@Override
-	public void mouseExited() {
-		pointer.setOpacity(0);
 	}
 }

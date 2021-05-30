@@ -19,7 +19,6 @@ public class Bouton {
 	protected Text t;
 	protected int x,y;
 	protected boolean b;
-
 	
 	public Bouton(Pane root,String text, int x, int y) {
 		this.x=x;this.y=y;
@@ -69,7 +68,6 @@ public class Bouton {
 	public void mouseReleased() {
 		System.out.println(t.getText());
 		imgV.setImage(enter);
-		b=false;
 	}
 	
 	public boolean isPressed() {
