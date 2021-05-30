@@ -1,5 +1,6 @@
 package combat;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,35 +50,60 @@ public class Combat {
 	 *  pareil pour les dégats reçus magique mais par rapport à ESP
 	 */
 	
-	public void deroulementCombatTour()
+	public void deroulementCombatTour(ArrayList<String> ordre)
 	{
-		int tour=1,i=0,j=0;
+		int tour=1,i=0,j=0,i1=0,i2=0;
 		while(!joueur.isEmpty()&!monstres.isEmpty())
 		{
 			System.out.println("Debut du tour " + tour);
 			joueur.forEach(item->item.setBouclier(0));
 			for(i=0;i<joueur.size();i++)
 			{
+				String[] separer=ordre.get(i).split(";");
 				if(!monstres.isEmpty())
 				{
-					System.out.println("Quelle competence voulez-vous utilisez?");
-					Scanner scanner = new Scanner(System.in);
-					int numero_competence=scanner.nextInt();
+					System.out.println(separer[0]);
+					switch(separer[0])
+					{
+					case "cac":i1=0;break;
+					case "tank":i1=1;break;
+					case "sorcier":i1=2;break;
+					case "pretre":i1=3;break;
+					}
+					int numero_competence=0;
+					switch(separer[1])
+					{
+					case "Attaque":numero_competence=1;break;
+					case "Magie":numero_competence=2;break;
+					case "Soin":numero_competence=3;break;
+					case "Défense":numero_competence=4;break;
+					}
+					
 					if(numero_competence==1||numero_competence==2) 
 					{
-						System.out.println("Qui voulez-vous attaquez?");
-						int adversaire=scanner.nextInt();
-						this.deroulementCombatAttaqueJ(i,adversaire, numero_competence);
+						switch(separer[2])
+						{
+						case "monstre 0":i2=0;break;
+						case "monstre 1":i2=1;break;
+						case "monstre 2":i2=2;break;
+						case "monstre 3":i2=3;break;
+						}
+						this.deroulementCombatAttaqueJ(i1,i2, numero_competence);
 					}
 					else if(numero_competence==3)
 					{
-						System.out.println("Qui voulez-vous soignez?");
-						int allie=scanner.nextInt();
-						this.deroulementCombatSoinJ(i,allie, numero_competence);
+						switch(separer[2])
+						{
+						case "cac":i2=0;break;
+						case "tank":i2=1;break;
+						case "sorcier":i2=2;break;
+						case "pretre":i2=3;break;
+						}
+						this.deroulementCombatSoinJ(i1,i2, numero_competence);
 					}
 					else if(numero_competence==4)
 					{
-						joueur.get(i).setBouclier(joueur.get(i).calcul_competence(numero_competence));
+						joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
 					}
 				}
 			}
@@ -108,7 +134,7 @@ public class Combat {
 		}
 	}
 	
-	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi)
+	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi) //Perte de vie d'un monstre
 	{
 		switch(competence_choisi)
 		{
@@ -127,7 +153,7 @@ public class Combat {
 			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			break;
 		}
-		if(monstres.get(indexM).getHp()<=0)
+		if(monstres.get(indexM).getHp()<=0) //Mort d'un monstre
 		{
 			for(int i=0;i<joueur.size();i++)
 			{
@@ -142,7 +168,7 @@ public class Combat {
 		}
 	}
 
-	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea)
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un héros
 	{
 		switch(competence_alea)
 		{
@@ -161,7 +187,7 @@ public class Combat {
 			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
 			break;
 		}
-		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ);
+		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ); //Mort d'un héros
 	}
 
 	
