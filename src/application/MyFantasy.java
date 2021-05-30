@@ -75,7 +75,7 @@ public class MyFantasy extends Application{
 		animation=new Anim(imgV,p,d);
 		
         root.getChildren().add(animation.getImageView());
-		scene.setOnKeyTyped(e->annimation(e.getCharacter()));
+		scene.setOnKeyPressed(e->annimation(e.getCharacter()));
 		scene.setOnKeyReleased(e2->stop());
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
@@ -101,7 +101,8 @@ public class MyFantasy extends Application{
 		phase=0;
 		afficheUI();
 
-		scene.setOnMousePressed(e->Action());
+		scene.setOnMouseReleased(e->Action());
+		scene.setOnKeyTyped(e1->Tue(e1.getCharacter()));
 		
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
@@ -139,6 +140,15 @@ public class MyFantasy extends Application{
 		imageview.setY(500);
 		root.getChildren().add(imageview);
 		
+		BoutonPerso p=new BoutonPerso(root,500,336,270,509,"perso1");
+		tabP.add(p);
+		p=new BoutonPerso(root,500,400,270,536,"perso2");
+		tabP.add(p);
+		p=new BoutonPerso(root,550,310,270,563,"perso3");
+		tabP.add(p);
+		p=new BoutonPerso(root,550,426,270,590,"perso4");
+		tabP.add(p);
+		
 		Bouton b=new Bouton(root,"Attaque",25,509);
 		tabB.add(b);
 		b=new Bouton(root,"Magie",25,536);
@@ -160,32 +170,69 @@ public class MyFantasy extends Application{
 	
 	public void Action() {
 		if(phase==0) {
-			System.out.println("phase 0 passée");
-			for(Bouton val:tabB){
-				val.setMouseTransparent(false);
+			BoutonPerso b=null;
+			for(BoutonPerso val:tabP){
+				if(val.isPressed())b=val;
 			}
-			phase+=1;
+			if(b!=null) {
+					for(Bouton val:tabB){
+						val.setMouseTransparent(false);
+					}
+					for(BoutonPerso val:tabP) {
+						val.setMouseTransparent(true);
+					}
+					phase+=1;
+				
+			}
 		}
 		else if(phase==1) {
-		Bouton b=null;
-		for(Bouton val:tabB){
-			if(val.isPressed())b=val;
-		}
-		if(b!=null) {
-				for(Bouton val:tabM){
-					val.setMouseTransparent(false);
+				Bouton b=null;
+				for(Bouton val:tabB){
+					if(val.isPressed())b=val;
 				}
-				phase+=1;
-			}
+				if(b!=null) {
+						for(BoutonMonstre val:tabM){
+							if(val.isVivant())val.setMouseTransparent(false);
+						}
+						for(Bouton val:tabB) {
+							val.setMouseTransparent(true);
+						}
+						phase+=1;
+					
+				}
 		}
 		else if(phase==2) {
-		Bouton b=null;
-		for(Bouton val:tabM){
-			if(val.isPressed())b=val;
+				BoutonMonstre b=null;
+				for(BoutonMonstre val:tabM){
+					if(val.isPressed())b=val;
+				}
+				if(b!=null) {
+						for(BoutonPerso val:tabP){
+							if(val.isVivant())if(!val.getB())val.setMouseTransparent(false);
+						}
+						for(BoutonMonstre val:tabM) {
+							val.setMouseTransparent(true);
+						}
+						phase=0;
+					
+				}
 		}
-		if(b!=null) {
-				phase+=1;
-			}
+	}
+	
+	public void Tue(String c) {
+		AnimMort anim;
+		switch (c)
+		{
+		case "m":
+			anim=new AnimMortM(tabM.get(0).getImgV());
+			anim.lancerAnim();
+			tabM.get(0).Meurt();
+			break;
+		case "p":
+			anim=new AnimMortP(tabP.get(1).getImgV());
+			anim.lancerAnim();
+			tabP.get(1).Meurt();
+			break;
 		}
 	}
 	
