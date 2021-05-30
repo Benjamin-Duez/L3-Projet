@@ -134,7 +134,7 @@ public class Combat {
 		}
 	}
 	
-	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi)
+	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi) //Perte de vie d'un monstre
 	{
 		switch(competence_choisi)
 		{
@@ -153,7 +153,7 @@ public class Combat {
 			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			break;
 		}
-		if(monstres.get(indexM).getHp()<=0)
+		if(monstres.get(indexM).getHp()<=0) //Mort d'un monstre
 		{
 			for(int i=0;i<joueur.size();i++)
 			{
@@ -168,7 +168,7 @@ public class Combat {
 		}
 	}
 
-	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea)
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un héros
 	{
 		switch(competence_alea)
 		{
@@ -187,7 +187,7 @@ public class Combat {
 			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
 			break;
 		}
-		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ);
+		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ); //Mort d'un héros
 	}
 
 	
