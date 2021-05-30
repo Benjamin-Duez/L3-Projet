@@ -94,6 +94,8 @@ public class MyFantasy extends Application{
 		tabM=new ArrayList<BoutonMonstre>();
 		tabP=new ArrayList<BoutonPerso>();
 		
+		ArrayList<String> recap=new ArrayList<String>();
+		
 		Scene scene= new Scene(root,width,height);
 		imageURL=new File(dossierURL+"/img/Interface/pointer.png").toURI().toString();
 		Image p =new Image(imageURL);
@@ -101,7 +103,7 @@ public class MyFantasy extends Application{
 		phase=0;
 		afficheUI();
 
-		scene.setOnMouseReleased(e->Action());
+		scene.setOnMouseReleased(e->Action(recap));
 		scene.setOnKeyTyped(e1->Tue(e1.getCharacter()));
 		
 		primaryStage.setResizable(false); 
@@ -140,13 +142,13 @@ public class MyFantasy extends Application{
 		imageview.setY(500);
 		root.getChildren().add(imageview);
 		
-		BoutonPerso p=new BoutonPerso(root,500,336,270,509,"perso1");
+		BoutonPerso p=new BoutonPerso(root,500,336,270,509,"cac");
 		tabP.add(p);
-		p=new BoutonPerso(root,500,400,270,536,"perso2");
+		p=new BoutonPerso(root,500,400,270,536,"tank");
 		tabP.add(p);
-		p=new BoutonPerso(root,550,310,270,563,"perso3");
+		p=new BoutonPerso(root,550,310,270,563,"sorcier");
 		tabP.add(p);
-		p=new BoutonPerso(root,550,426,270,590,"perso4");
+		p=new BoutonPerso(root,550,426,270,590,"pretre");
 		tabP.add(p);
 		
 		Bouton b=new Bouton(root,"Attaque",25,509);
@@ -167,8 +169,11 @@ public class MyFantasy extends Application{
 		m=new BoutonMonstre(root, 100, 400, "watch");
 		tabM.add(m);
 	}
-	
-	public void Action() {
+	private String s;
+	public void Action(ArrayList<String> recap) {
+		if(phase==0) {
+			s=new String();
+		}
 		if(phase==0) {
 			BoutonPerso b=null;
 			for(BoutonPerso val:tabP){
@@ -181,8 +186,9 @@ public class MyFantasy extends Application{
 					for(BoutonPerso val:tabP) {
 						val.setMouseTransparent(true);
 					}
-					phase+=1;
-				
+					phase=1;
+					b.setOccupe(true);
+					s=b.getNom()+";";
 			}
 		}
 		else if(phase==1) {
@@ -191,14 +197,56 @@ public class MyFantasy extends Application{
 					if(val.isPressed())b=val;
 				}
 				if(b!=null) {
+					switch (b.getText()) {
+					case "Attaque":
 						for(BoutonMonstre val:tabM){
 							if(val.isVivant())val.setMouseTransparent(false);
 						}
 						for(Bouton val:tabB) {
 							val.setMouseTransparent(true);
 						}
-						phase+=1;
-					
+						phase=2;
+						s=s+b.getText()+";";
+						break;
+					case "Magie":
+						for(BoutonMonstre val:tabM){
+							if(val.isVivant())val.setMouseTransparent(false);
+						}
+						for(Bouton val:tabB) {
+							val.setMouseTransparent(true);
+						}
+						phase=2;
+						s=s+b.getText()+";";
+						break;
+						
+					case "Soin":
+						for(BoutonPerso val:tabP){
+							if(val.isVivant())val.setMouseTransparent(false);
+						}
+						for(Bouton val:tabB) {
+							val.setMouseTransparent(true);
+						}
+						phase=3;
+						s=s+b.getText()+";";
+						break;
+						
+					case "Défense":
+						for(BoutonPerso val:tabP){
+							if(val.isVivant())if(!val.isOccupe())val.setMouseTransparent(false);
+						}
+						for(Bouton val:tabB) {
+							val.setMouseTransparent(true);
+						}
+						phase=0;
+						s=s+b.getText();
+						recap.add(s);
+						
+						boolean bool=false;
+						for(BoutonPerso val:tabP)
+							if(!val.isOccupe())bool=true;
+						if(!bool)lancerCombat(recap);
+						break;
+					}
 				}
 		}
 		else if(phase==2) {
@@ -208,14 +256,42 @@ public class MyFantasy extends Application{
 				}
 				if(b!=null) {
 						for(BoutonPerso val:tabP){
-							if(val.isVivant())if(!val.getB())val.setMouseTransparent(false);
+							if(val.isVivant())if(!val.isOccupe())val.setMouseTransparent(false);
 						}
 						for(BoutonMonstre val:tabM) {
 							val.setMouseTransparent(true);
 						}
 						phase=0;
-					
+						s=s+b.getNom();
+						recap.add(s);
+						
+						boolean bool=false;
+						for(BoutonPerso val:tabP)
+							if(!val.isOccupe())bool=true;
+						if(!bool)lancerCombat(recap);
 				}
+		}
+		else if(phase==3) {
+			BoutonPerso b=null;
+			for(BoutonPerso val:tabP){
+				if(val.isPressed())b=val;
+			}
+			if(b!=null) {
+					for(BoutonPerso val:tabP){
+						val.setMouseTransparent(true);
+					}
+					for(BoutonPerso val:tabP){
+						if(val.isVivant() && !val.isOccupe())val.setMouseTransparent(false);
+					}
+					phase=0;
+					s=s+b.getNom();
+					recap.add(s);
+					
+					boolean bool=false;
+					for(BoutonPerso val:tabP)
+						if(!val.isOccupe())bool=true;
+					if(!bool)lancerCombat(recap);
+			}
 		}
 	}
 	
@@ -234,6 +310,12 @@ public class MyFantasy extends Application{
 			tabP.get(1).Meurt();
 			break;
 		}
+	}
+	
+	public void lancerCombat(ArrayList<String> recap) {
+		System.out.println("Début du Combat" + recap);
+		for(String val:recap)
+			System.out.println(val);
 	}
 	
 	public static void main(String[] args) {
