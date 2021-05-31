@@ -31,22 +31,22 @@ public class Sorcier extends PJ {
 		System.out.println("Valeur de alea " + alea);
 		switch(alea) {
 		case 5:
-			mag+=2;hp_max+=1;mp_max+=1;esp+=1;
+			mag+=2;hp_max+=1;mp_max+=1;esp+=1;hp=hp_max;mp=mp_max;
 			break;
 		case 6:
-			mag+=2;hp_max+=1;mp_max+=2;esp+=1;
+			mag+=2;hp_max+=1;mp_max+=2;esp+=1;hp=hp_max;mp=mp_max;
 			break;
 		case 7:
-			mag+=2;hp_max+=1;mp_max+=2;esp+=1;arm+=1;
+			mag+=2;hp_max+=1;mp_max+=2;esp+=1;arm+=1;hp=hp_max;mp=mp_max;
 			break;
 		case 8:
-			mag+=3;hp_max+=1;mp_max+=2;esp+=1;arm+=1;
+			mag+=3;hp_max+=1;mp_max+=2;esp+=1;arm+=1;hp=hp_max;mp=mp_max;
 			break;
 		case 9:
-			mag+=3;hp_max+=1;mp_max+=2;esp+=2;arm+=1;
+			mag+=3;hp_max+=1;mp_max+=2;esp+=2;arm+=1;hp=hp_max;mp=mp_max;
 			break;
 		case 10:
-			mag+=3;hp_max+=2;mp_max+=2;esp+=2;arm+=1;
+			mag+=3;hp_max+=2;mp_max+=2;esp+=2;arm+=1;hp=hp_max;mp=mp_max;
 			break;
 		}
 		lvl++;

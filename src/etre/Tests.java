@@ -1,5 +1,7 @@
 package etre;
 
+import java.util.ArrayList;
+
 import combat.Combat;
 
 public class Tests {
@@ -9,31 +11,35 @@ public class Tests {
 		Sorcier sorcier = new Sorcier();
 		sorcier.attributionStats();
 		sorcier.creationAttaques();
-		System.out.println(sorcier);
 		Pretre pretre = new Pretre();
 		pretre.attributionStats();
-		System.out.println(pretre);
+		pretre.creationAttaques();
 		CaC cac = new CaC();
 		cac.attributionStats();
 		cac.creationAttaques();
-		System.out.println(cac);
 		Tank tank = new Tank();
 		tank.attributionStats();
 		tank.creationAttaques();
-		System.out.println(tank);
-		cac.levelUp();
-		System.out.println(cac);
 		Squelette sque = new Squelette();
-		System.out.println(sque);
 		Sorciere sorc = new Sorciere();
-		System.out.println(sorc);
+		Trent trent = new Trent();
+		Fee fee = new Fee();
 		Combat comb=new Combat();
-		comb.addJoueur(tank);
 		comb.addJoueur(cac);
+		comb.addJoueur(tank);
+		comb.addJoueur(sorcier);
+		comb.addJoueur(pretre);
 		comb.addMonstre(sque);
 		comb.addMonstre(sorc);
+		comb.addMonstre(fee);
+		comb.addMonstre(trent);
 		System.out.println(comb);
-		comb.deroulementCombatTour();
+		ArrayList<String>test=new ArrayList<String>();
+		test.add("cac;Défense");
+		test.add("tank;Défense");
+		test.add("sorcier;Défense");
+		test.add("pretre;Défense");
+		comb.deroulementCombatTour(test);
 		System.out.println(comb);
 	}
 }
