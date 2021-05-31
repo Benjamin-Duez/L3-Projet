@@ -5,21 +5,18 @@ public class Squelette extends Monstre {
 	public Squelette() {
 		
 		id = ++nbm;
-		att = 50;
-		mag = 15;
-		esp = 20;
-		arm = 30;
-		hp = 35;
-		hp_max= 35;
-		mp = 15;
-		mp_max = 15;
-		exp_gagne=30;
-		
+		att = 25;
+		mag = 25;
+		esp = 30;
+		arm = 50;
+		hp = 50;
+		mp = 20;
+		exp_gagne=17;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Squelette [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
+		return "Trent [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
 				+ ", arm=" + arm + "]";
 	}
 	
