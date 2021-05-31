@@ -3,7 +3,6 @@ package combat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 import etre.Monstre;
 import etre.PJ;
@@ -141,18 +140,52 @@ public class Combat {
 		case 1:
 			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				if(monstres.get(indexM).getBouclier()>((joueur.get(indexJ).calcul_competence(competence_choisi))/2))
+				{
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				}
+				else if(monstres.get(indexM).getBouclier()!=0)
+				{
+					int temp=(joueur.get(indexJ).calcul_competence(competence_choisi))/2;
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setBouclier(0);
+				}
+				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
 			}
 			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			break;
 		case 2:
 			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
 			{
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				if(monstres.get(indexM).getBouclier()>((joueur.get(indexJ).calcul_competence(competence_choisi))/2))
+				{
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				}
+				else if(monstres.get(indexM).getBouclier()!=0)
+				{
+					int temp=(joueur.get(indexJ).calcul_competence(competence_choisi))/2;
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setBouclier(0);
+				}
+				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+			else 
+			{
+				if(monstres.get(indexM).getBouclier()>joueur.get(indexJ).calcul_competence(competence_choisi))
+				{
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				}
+				else if(monstres.get(indexM).getBouclier()!=0)
+				{
+					int temp=joueur.get(indexJ).calcul_competence(competence_choisi);
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setBouclier(0);
+				}
+				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+			}
 			break;
-		}
+			}
 		if(monstres.get(indexM).getHp()<=0) //Mort d'un monstre
 		{
 			for(int i=0;i<joueur.size();i++)
@@ -162,7 +195,21 @@ public class Combat {
 					joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()-joueur.get(i).getExp_limit());
 					joueur.get(i).levelUp();
 				}
-				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
+				else
+				{
+					if(monstres.get(indexM).getBouclier()>joueur.get(indexJ).calcul_competence(competence_choisi))
+					{
+						monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-joueur.get(indexJ).calcul_competence(competence_choisi));
+					}
+					else if(monstres.get(indexM).getBouclier()!=0)
+					{
+						int temp=joueur.get(indexJ).calcul_competence(competence_choisi);
+						monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+						monstres.get(indexM).setBouclier(0);
+					}
+					else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				}
 			}
 			removeMonstre(indexM);
 		}
