@@ -3,6 +3,7 @@ package application;
 import java.io.File;
 import java.util.ArrayList;
 
+import animation.*;
 import gui.Bouton;
 import gui.BoutonMonstre;
 import gui.BoutonPerso;
@@ -25,8 +26,6 @@ public class MyFantasy extends Application{
     private int dimw;
     private String d;
     private int phase;
-    private double widthStep;
-    private double heightStep;
     
     private Pane root;
     
@@ -54,10 +53,11 @@ public class MyFantasy extends Application{
 		d="";
 		primaryStage.setTitle("MyFantasy");
 		primaryStage.getIcons().add(new Image(new File(dossierURL+"/img/Interface/icon.png").toURI().toString()));
+		//afficheMap(primaryStage);
 		afficheCombat(primaryStage);
     }
 	
-/*	void afficheMap(Stage primaryStage) {
+	void afficheMap(Stage primaryStage) {
 		
 		root=new Pane();
 
@@ -65,8 +65,11 @@ public class MyFantasy extends Application{
 		Image image = new Image(imageURL);
 		ImageView imageview=new ImageView(image);
 		root.getChildren().setAll(imageview);
+		imageURL=new File(dossierURL+"/img/Interface/pointer.png").toURI().toString();
+		Image pointer =new Image(imageURL);
 		
 		Scene scene= new Scene(root,width,height);
+		scene.setOnMouseEntered(e->scene.setCursor(new ImageCursor(pointer)));
 		
 		placeCase();
 		ajoutPersonne();
@@ -75,12 +78,13 @@ public class MyFantasy extends Application{
 		animation=new Anim(imgV,p,d);
 		
         root.getChildren().add(animation.getImageView());
-		scene.setOnKeyPressed(e->annimation(e.getCharacter()));
-		scene.setOnKeyReleased(e2->stop());
+        
+		scene.setOnKeyPressed(e->animation(e.getCharacter()));
+		scene.setOnKeyReleased(e2->stopAnim());
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
 		primaryStage.show();
-	}*/
+	}
 	
 	void afficheCombat(Stage primaryStage) {
 		
@@ -104,7 +108,7 @@ public class MyFantasy extends Application{
 		afficheUI();
 
 		scene.setOnMouseReleased(e->Action(recap));
-		scene.setOnKeyTyped(e1->Tue(e1.getCharacter()));
+		scene.setOnKeyTyped(e1->Tue(e1.getCharacter())); //test des animations de mort
 		
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
@@ -124,16 +128,16 @@ public class MyFantasy extends Application{
 	
 	void ajoutPersonne() {
 		Case c= new Case(tab[16][6].getX(),tab[16][6].getY());
-		p=new PersoImg("perso1",c);
+		p=new PersoImg("cac",c);
 	}
 	
-/*	void annimation(String t) {
+	void animation(String t) {
 		animation.lancerAnim(t);
 	}
 	
-	public void stop() {
+	public void stopAnim() {
 		animation.pause();
-	}*/
+	}
 	
 	void afficheUI() {
 		String imageURL=new File(dossierURL+"/img/Interface/ui2.png").toURI().toString();
@@ -169,7 +173,9 @@ public class MyFantasy extends Application{
 		m=new BoutonMonstre(root, 100, 400, "watch");
 		tabM.add(m);
 	}
+	
 	private String s;
+	
 	public void Action(ArrayList<String> recap) {
 		if(phase==0) {
 			s=new String();
