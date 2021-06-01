@@ -30,7 +30,7 @@ public abstract class Monstre extends Etre_Vivant {
 		case 4:
 			degats_soins_bouclier=(arm/3)+(esp/3);
 			break;
-		}	
+		}
 		return degats_soins_bouclier;
 	}
 	

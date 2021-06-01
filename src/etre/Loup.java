@@ -19,7 +19,7 @@ public class Loup extends Monstre {
 	
 	@Override
 	public String toString() {
-		return "Squelette [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
+		return "Loup [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
 				+ ", arm=" + arm + "]";
 	}
 	

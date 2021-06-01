@@ -16,7 +16,7 @@ public class Squelette extends Monstre {
 
 	@Override
 	public String toString() {
-		return "Trent [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
+		return "Squelette [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
 				+ ", arm=" + arm + "]";
 	}
 	

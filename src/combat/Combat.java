@@ -58,16 +58,47 @@ public class Combat {
 			for(int i=0;i<joueur.size();i++)
 			{
 				String[] separer=ordre.get(i).split(";");
-				tour+=(1/(double)joueur.size());
-				System.out.println(tour);
-				deroulementCombatTour(separer);	
+				deroulementCombatTourJ(separer);	
+			}
+			System.out.println(monstres);
+			ArrayList<String> temp = new ArrayList<String>();
+			temp=ordreMonstre(monstres.size());
+			for(int j=0;j<monstres.size();j++)
+			{
+				String[] separer=temp.get(j).split(";");
+				deroulementCombatTourM(separer);	
 			}
 		}
 	}
 	
-	public void deroulementCombatTour(String[] separer)
+	public ArrayList<String> ordreMonstre(int taille)
 	{
-		int j=0,i1=0,i2=0;
+		ArrayList<String> ordreM =new ArrayList<String>();
+		for(int i=0;i<taille;i++)
+		{
+			String test=new String();
+			int competence_alea= 1 + (int)(Math.random() * ((4 - 1) + 1));
+			if(competence_alea==1||competence_alea==2)
+			{
+				int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
+				if(competence_alea==1) test=i+";Attaque;joueur "+adversaire_choisi;
+				else test=i+";Magie;joueur "+adversaire_choisi;
+			}
+			else if(competence_alea==3)
+			{
+				int allie_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
+				test=i+";Soin;monstre "+allie_choisi;
+			}
+			else test=i+";Défense";
+			ordreM.add(test);
+		}
+		System.out.println(ordreM);
+		return ordreM;
+	}
+	
+	public void deroulementCombatTourJ(String[] separer)
+	{
+		int i1=0,i2=0;
 		joueur.forEach(item->item.setBouclier(0));
 		if(!monstres.isEmpty())
 		{
@@ -116,31 +147,56 @@ public class Combat {
 			{
 				joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
 			}
-		
 		}
+	}
+	
+	public void deroulementCombatTourM(String[] separer)
+	{
+		int competence_alea=0,j1=0,j2=0;
 		monstres.forEach(item->item.setBouclier(0));
-		if(tour==Math.floor(tour))
+		if(!joueur.isEmpty())
 		{
-			for(j=0;j<monstres.size();j++)
+			switch(separer[0])
 			{
-				if(!joueur.isEmpty())
+			case"0":j1=0;break;
+			case"1":j1=1;break;
+			case"2":j1=2;break;
+			case"3":j1=3;break;
+			}
+			switch(separer[1])
+			{
+			case "Attaque":competence_alea=1;break;
+			case "Magie":competence_alea=2;break;
+			case "Soin":competence_alea=3;break;
+			case "Défense":competence_alea=4;break;
+			}
+			if(competence_alea==1||competence_alea==2) 
+			{
+				switch(separer[2])
 				{
-					int competence_alea= 1 + (int)(Math.random() * ((4 - 1) + 1));
-					if(competence_alea==1||competence_alea==2) 
-					{
-						int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
-						this.deroulementCombatAttaqueM(j,adversaire_choisi, competence_alea);
-					}
-					else if(competence_alea==3)
-					{
-						int allie_choisi= (int)(Math.random() * ((monstres.size()-1) + 1));
-						this.deroulementCombatSoinM(j,allie_choisi, competence_alea);
-					}
-					else if(competence_alea==4)
-					{
-						monstres.get(j).setBouclier(monstres.get(j).calcul_competence(competence_alea));
-					}
+				case "joueur 0":j2=0;break;
+				case "joueur 1":j2=1;break;
+				case "joueur 2":j2=2;break;
+				case "joueur 3":j2=3;break;
+				}	
+				if(j2>joueur.size()-1)j2=0;
+				this.deroulementCombatAttaqueM(j1,j2, competence_alea);
+			}
+			else if(competence_alea==3)
+			{
+				switch(separer[2])
+				{
+				case "monstre 0":j2=0;break;
+				case "monstre 1":j2=1;break;
+				case "monstre 2":j2=2;break;
+				case "monstre 3":j2=3;break;
 				}
+				if(j2>monstres.size()-1)j2=0;
+				this.deroulementCombatSoinM(j1,j2, competence_alea);
+			}
+			else if(competence_alea==4)
+			{
+				monstres.get(j1).setBouclier(monstres.get(j1).calcul_competence(competence_alea));
 			}
 		}
 	}
@@ -197,7 +253,7 @@ public class Combat {
 				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
 			}
 			break;
-			}
+		}
 		if(monstres.get(indexM).getHp()<=0) //Mort d'un monstre
 		{
 			for(int i=0;i<joueur.size();i++)

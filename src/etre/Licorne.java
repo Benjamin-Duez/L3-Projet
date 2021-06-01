@@ -16,7 +16,7 @@ public class Licorne extends Monstre {
 
 	@Override
 	public String toString() {
-		return "Fee [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
+		return "Licorne [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
 				+ ", arm=" + arm + "]";
 	}
 	
