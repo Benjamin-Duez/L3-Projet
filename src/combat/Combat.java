@@ -243,7 +243,11 @@ public class Combat {
 			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
 			break;
 		}
-		if(joueur.get(indexJ).getHp()<=0) removeJoueur(indexJ); //Mort d'un héros
+		if(joueur.get(indexJ).getHp()<=0) 
+			{
+				joueur.get(indexJ).setHp(0);
+				removeJoueur(indexJ); //Mort d'un héros
+			}
 	}
 
 	

@@ -38,7 +38,7 @@ public class Tests {
 		test.add("cac;Attaque;monstre 3");
 		test.add("tank;Attaque;monstre 3");
 		test.add("sorcier;Attaque;monstre 3");
-		test.add("pretre;Attaque;monstre 3");
+		test.add("pretre;Soin;cac");
 		comb.deroulementCombat(test);
 		System.out.println(comb);
 	}
