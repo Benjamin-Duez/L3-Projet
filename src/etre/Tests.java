@@ -35,11 +35,11 @@ public class Tests {
 		comb.addMonstre(sque);
 		System.out.println(comb);
 		ArrayList<String>test=new ArrayList<String>();
-		test.add("cac;Attaque;monstre 0");
-		test.add("tank;Défense");
-		test.add("sorcier;Défense");
-		test.add("pretre;Défense");
-		comb.deroulementCombatTour(test);
+		test.add("cac;Attaque;monstre 3");
+		test.add("tank;Attaque;monstre 3");
+		test.add("sorcier;Attaque;monstre 3");
+		test.add("pretre;Attaque;monstre 3");
+		comb.deroulementCombat(test);
 		System.out.println(comb);
 	}
 }
