@@ -207,21 +207,7 @@ public class Combat {
 					joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()-joueur.get(i).getExp_limit());
 					joueur.get(i).levelUp();
 				}
-				else
-				{
-					if(monstres.get(indexM).getBouclier()>joueur.get(indexJ).calcul_competence(competence_choisi))
-					{
-						monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-joueur.get(indexJ).calcul_competence(competence_choisi));
-					}
-					else if(monstres.get(indexM).getBouclier()!=0)
-					{
-						int temp=joueur.get(indexJ).calcul_competence(competence_choisi);
-						monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
-						monstres.get(indexM).setBouclier(0);
-					}
-					else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
-					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
-				}
+				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
 			}
 			removeMonstre(indexM);
 		}
@@ -229,21 +215,66 @@ public class Combat {
 
 	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un héros
 	{
+		int temp=monstres.get(indexM).calcul_competence(competence_alea);
 		switch(competence_alea)
 		{
 		case 1:
 			if(joueur.get(indexJ).getArm()>=monstres.get(indexM).getAtt())
 			{
-				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(monstres.get(indexM).calcul_competence(competence_alea))/2);
+				temp/=2;
+				if(joueur.get(indexJ).getBouclier()>temp)
+				{
+					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+				}
+				else if(joueur.get(indexJ).getBouclier()!=0)
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
+					joueur.get(indexJ).setBouclier(0);
+				}
+				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 			}
-			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+			else 
+			{
+				if(joueur.get(indexJ).getBouclier()>temp)
+				{
+					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+				}
+				else if(joueur.get(indexJ).getBouclier()!=0)
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
+					joueur.get(indexJ).setBouclier(0);
+				}
+				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+			}
 			break;
 		case 2:
 			if(joueur.get(indexJ).getEsp()>=monstres.get(indexM).getMag())
 			{
-				joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(monstres.get(indexM).calcul_competence(competence_alea))/2);
+				temp/=2;
+				if(joueur.get(indexJ).getBouclier()>temp)
+				{
+					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+				}
+				else if(joueur.get(indexJ).getBouclier()!=0)
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
+					joueur.get(indexJ).setBouclier(0);
+				}
+				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 			}
-			else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-monstres.get(indexM).calcul_competence(competence_alea));
+			else 
+			{
+				if(joueur.get(indexJ).getBouclier()>temp)
+				{
+					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+				}
+				else if(joueur.get(indexJ).getBouclier()!=0)
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
+					joueur.get(indexJ).setBouclier(0);
+				}
+				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+			}
 			break;
 		}
 		if(joueur.get(indexJ).getHp()<=0) 
