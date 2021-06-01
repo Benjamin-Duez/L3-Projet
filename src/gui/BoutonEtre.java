@@ -3,18 +3,26 @@ package gui;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public abstract class BoutonEtre extends Bouton  {
+public class BoutonEtre extends Bouton  {
 
 	protected String nom;
 	public ImageView pointer;
 	protected boolean vivant;
-	protected boolean o;
+	protected boolean occ;
+	
 	
 	public BoutonEtre(Pane root, String text, int x, int y,String nom) {
 		super(root, text, x, y);
 		vivant=true;
-		o=false;
+		occ=false;
 		this.nom=nom;
+	}
+	
+	public void prendDegat(String degat) {
+	}
+	
+	public void setup() {
+		occ=false;
 	}
 	
 	public void Meurt() {
@@ -31,7 +39,7 @@ public abstract class BoutonEtre extends Bouton  {
 	}
 	
 	public boolean isOccupe() {
-		return o;
+		return occ;
 	}
 	@Override
 	public void mouseReleased() {

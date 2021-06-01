@@ -1,5 +1,8 @@
 package etre;
 
+import gui.Bouton;
+import gui.BoutonEtre;
+
 public abstract class Etre_Vivant {
 
 	static int nbm;
@@ -13,7 +16,6 @@ public abstract class Etre_Vivant {
 	int esp; //soins + armure magique
 	int arm; //armure physique
 	int bouclier; //Buffer permettant de reduire les degats recus
-
 	
 	public void setHp(int hp) {
 		this.hp = hp;

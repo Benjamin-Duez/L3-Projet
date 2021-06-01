@@ -10,13 +10,15 @@ public class Squelette extends Monstre {
 		esp = 30;
 		arm = 50;
 		hp = 50;
+		hp_max = 50;
 		mp = 20;
+		mp_max = 20;
 		exp_gagne=17;
 	}
 
 	@Override
 	public String toString() {
-		return "Squelette [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
+		return "Trent [id=" + id + ", hp=" + hp + ", mp=" + mp + ", att=" + att + ", mag=" + mag + ", esp=" + esp
 				+ ", arm=" + arm + "]";
 	}
 	

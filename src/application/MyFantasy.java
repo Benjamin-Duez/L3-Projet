@@ -3,7 +3,19 @@ package application;
 import java.io.File;
 import java.util.ArrayList;
 
-import animation.*;
+import animation.Anim;
+import animation.AnimDegat;
+import animation.AnimMort;
+import animation.AnimMortM;
+import combat.Combat;
+import etre.CaC;
+import etre.Licorne;
+import etre.Loup;
+import etre.Pretre;
+import etre.Sorcier;
+import etre.Sorciere;
+import etre.Squelette;
+import etre.Tank;
 import gui.Bouton;
 import gui.BoutonMonstre;
 import gui.BoutonPerso;
@@ -44,6 +56,7 @@ public class MyFantasy extends Application{
 	private ArrayList <BoutonMonstre> tabM;
 	private ArrayList <BoutonPerso> tabP;
 	
+	Combat combat;
 	
 	public void start(Stage primaryStage) {
 		height=624;
@@ -105,10 +118,12 @@ public class MyFantasy extends Application{
 		Image p =new Image(imageURL);
 		scene.setOnMouseEntered(e->scene.setCursor(new ImageCursor(p)));
 		phase=0;
+		
+		combat=new Combat();
 		afficheUI();
 
 		scene.setOnMouseReleased(e->Action(recap));
-		scene.setOnKeyTyped(e1->Tue(e1.getCharacter())); //test des animations de mort
+		//scene.setOnKeyTyped(e1->Tue(e1.getCharacter())); //test des animations de mort
 		
 		primaryStage.setResizable(false); 
 		primaryStage.setScene(scene);
@@ -146,14 +161,37 @@ public class MyFantasy extends Application{
 		imageview.setY(500);
 		root.getChildren().add(imageview);
 		
-		BoutonPerso p=new BoutonPerso(root,500,336,270,509,"cac");
+		CaC cac = new CaC();
+		cac.attributionStats();
+		cac.creationAttaques();
+		BoutonPerso p=new BoutonPerso(root,500,336,270,509,"cac",cac);
+		cac.setBouton(p);
 		tabP.add(p);
-		p=new BoutonPerso(root,500,400,270,536,"tank");
+		combat.addJoueur(cac);
+		
+		Tank tank = new Tank();
+		tank.attributionStats();
+		tank.creationAttaques();
+		p=new BoutonPerso(root,500,400,270,536,"tank",tank);
+		tank.setBouton(p);
 		tabP.add(p);
-		p=new BoutonPerso(root,550,310,270,563,"sorcier");
+		combat.addJoueur(tank);
+		
+		Sorcier sorcier = new Sorcier();
+		sorcier.attributionStats();
+		sorcier.creationAttaques();
+		p=new BoutonPerso(root,550,310,270,563,"sorcier",sorcier);
+		sorcier.setBouton(p);
 		tabP.add(p);
-		p=new BoutonPerso(root,550,426,270,590,"pretre");
+		combat.addJoueur(sorcier);
+		
+		Pretre pretre = new Pretre();
+		pretre.attributionStats();
+		pretre.creationAttaques();
+		p=new BoutonPerso(root,550,426,270,590,"pretre",pretre);
+		pretre.setBouton(p);
 		tabP.add(p);
+		combat.addJoueur(pretre);
 		
 		Bouton b=new Bouton(root,"Attaque",25,509);
 		tabB.add(b);
@@ -164,14 +202,29 @@ public class MyFantasy extends Application{
 		b=new Bouton(root,"Défense",25,590);
 		tabB.add(b);
 		
-		BoutonMonstre m=new BoutonMonstre(root, 200, 300, "warg");
+		Loup loup = new Loup();
+		BoutonMonstre m=new BoutonMonstre(root, 200, 300, "warg",loup);
+		loup.setBouton(m);
 		tabM.add(m);
-		m=new BoutonMonstre(root, 200, 400, "skully");
+		combat.addMonstre(loup);
+		
+		Squelette sque = new Squelette();
+		m=new BoutonMonstre(root, 200, 400, "skully",sque);
+		sque.setBouton(m);
 		tabM.add(m);
-		m=new BoutonMonstre(root, 100, 300, "unicorn");
+		combat.addMonstre(sque);
+		
+		Licorne uni = new Licorne();
+		m=new BoutonMonstre(root, 100, 300, "unicorn",uni);
+		uni.setBouton(m);
 		tabM.add(m);
-		m=new BoutonMonstre(root, 100, 400, "watch");
+		combat.addMonstre(uni);
+		
+		Sorciere sorc = new Sorciere();
+		m=new BoutonMonstre(root, 100, 400, "watch",sorc);
+		sorc.setBouton(m);
 		tabM.add(m);
+		combat.addMonstre(sorc);
 	}
 	
 	private String s;
@@ -314,19 +367,19 @@ public class MyFantasy extends Application{
 			tabM.get(0).Meurt();
 			break;
 		case "p":
-			anim=new AnimMortP(tabP.get(1).getImgV());
 			anim2=new AnimDegat(root,"-9999",tabP.get(1).getImgV(),"perso");
+			tabP.get(1).getPerso().setHp(tabP.get(1).getPerso().getHp()-9999);
+			tabP.get(1).statMAJ();
 			anim2.lancerAnim();
-			anim.lancerAnim();
-			tabP.get(1).Meurt();
 			break;
 		}
 	}
 	
 	public void lancerCombat(ArrayList<String> recap) {
-		System.out.println("Début du Combat" + recap);
-		for(String val:recap)
-			System.out.println(val);
+		System.out.println("Début du Combat");
+		System.out.println("");
+		combat.deroulementCombat(recap);
+		combat.start();
 	}
 	
 	public static void main(String[] args) {

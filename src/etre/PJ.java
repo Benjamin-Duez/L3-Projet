@@ -2,6 +2,7 @@ package etre;
 
 import java.util.Map;
 
+import gui.BoutonPerso;
 import items.Armes;
 import items.Armures;
 import items.Type_Armure;
@@ -15,6 +16,7 @@ public abstract class PJ extends Humain {
 	Map<Type_Armure,Armures> equipement;
 	Armes arme;
 	Map<Integer,Integer> attaques;
+	private BoutonPerso b;
 	
 	public abstract void attributionStats();
 	
@@ -24,7 +26,13 @@ public abstract class PJ extends Humain {
 		return id;
 	}
 	
+	public void setBouton(BoutonPerso bouton) {
+		b=bouton;
+	}
 	
+	public BoutonPerso getBouton() {
+		return b;
+	}
 	
 	public Map<Integer, Integer> getAttaques() {
 		return attaques;

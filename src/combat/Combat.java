@@ -6,13 +6,19 @@ import java.util.List;
 
 import etre.Monstre;
 import etre.PJ;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
-public class Combat {
+public class Combat{
 	
 	List<PJ> joueur;
 	List<Monstre> monstres;
-	double tour=1;
-	
+	ArrayList<String> ordreJ;
+	ArrayList<String> ordreM;
+	Timeline littleCycle;	
+	boolean phase;
+
 	public void addJoueur(PJ player)
 	{
 		if(joueur==null)joueur=new LinkedList<PJ>();
@@ -49,31 +55,9 @@ public class Combat {
 	 *  
 	 *  pareil pour les dégats reçus magique mais par rapport à ESP
 	 */
-	
-	public void deroulementCombat(ArrayList<String> ordre)
+	public void ordreMonstre(int taille)
 	{
-		System.out.println("Debut du tour "+tour);
-		if(!joueur.isEmpty()&!monstres.isEmpty())
-		{
-			for(int i=0;i<joueur.size();i++)
-			{
-				String[] separer=ordre.get(i).split(";");
-				deroulementCombatTourJ(separer);	
-			}
-			System.out.println(monstres);
-			ArrayList<String> temp = new ArrayList<String>();
-			temp=ordreMonstre(monstres.size());
-			for(int j=0;j<monstres.size();j++)
-			{
-				String[] separer=temp.get(j).split(";");
-				deroulementCombatTourM(separer);	
-			}
-		}
-	}
-	
-	public ArrayList<String> ordreMonstre(int taille)
-	{
-		ArrayList<String> ordreM =new ArrayList<String>();
+		ordreM =new ArrayList<String>();
 		for(int i=0;i<taille;i++)
 		{
 			String test=new String();
@@ -92,8 +76,52 @@ public class Combat {
 			else test=i+";Défense";
 			ordreM.add(test);
 		}
-		System.out.println(ordreM);
-		return ordreM;
+	}
+	
+	public void deroulementCombat(ArrayList<String> ordre)
+	{
+		this.ordreJ=ordre;
+		littleCycle = new Timeline(new KeyFrame(Duration.millis(1000),
+                event -> {
+                	
+                	if(!joueur.isEmpty()&&!monstres.isEmpty())
+                	{
+	                	if(!phase) {
+							if(!ordre.isEmpty()) {
+								String[] separer=this.ordreJ.get(0).split(";");
+								this.ordreJ.remove(0);
+								deroulementCombatTourJ(separer);	
+								}
+							else {
+								ordreMonstre(monstres.size());
+								phase=true;
+								}
+	                	}
+	                	else {
+	        				if(!ordreM.isEmpty()) 
+	        				{
+	        					String[] separer=ordreM.get(0).split(";");
+	        					ordreM.remove(0);
+	        					deroulementCombatTourM(separer);
+	        				}
+	        				else {
+	        					joueur.forEach(item->item.getBouton().setup());
+	        					monstres.forEach(item->item.getBouton().setup());
+	        					phase=false;
+	        					littleCycle.stop();
+	        				}
+	        			}
+        			}
+                	else {
+                		
+                	}
+                }));
+        littleCycle.setCycleCount(Timeline.INDEFINITE);
+	}
+	
+	public void start() {
+		phase=false;
+		littleCycle.play();
 	}
 	
 	public void deroulementCombatTourJ(String[] separer)
@@ -203,67 +231,113 @@ public class Combat {
 	
 	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi) //Perte de vie d'un monstre
 	{
+		int temp=(joueur.get(indexJ).calcul_competence(competence_choisi));
 		switch(competence_choisi)
 		{
 		case 1:
 			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 			{
-				if(monstres.get(indexM).getBouclier()>((joueur.get(indexJ).calcul_competence(competence_choisi))/2))
+				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
-					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
+					monstres.get(indexM).getBouton().prendDegat("Bloqué");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
-					int temp=(joueur.get(indexJ).calcul_competence(competence_choisi))/2;
-					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp/2-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).getBouton().statMAJ();
+					monstres.get(indexM).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 					monstres.get(indexM).setBouclier(0);
 				}
-				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				else 
+				{
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp/2));
+					monstres.get(indexM).getBouton().prendDegat("-"+temp/2);
+					monstres.get(indexM).getBouton().statMAJ();
+				}
 			}
-			else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+			else 
+			{
+				if(monstres.get(indexM).getBouclier()>temp)
+				{
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
+					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+				}
+				else if(monstres.get(indexM).getBouclier()!=0)
+				{
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).getBouton().statMAJ();
+					monstres.get(indexM).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setBouclier(0);
+				}
+				else 
+				{
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-temp);
+					monstres.get(indexM).getBouton().prendDegat("-"+temp/2);
+					monstres.get(indexM).getBouton().statMAJ();
+				}
+			}
 			break;
 		case 2:
 			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
 			{
-				if(monstres.get(indexM).getBouclier()>((joueur.get(indexJ).calcul_competence(competence_choisi))/2))
+				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
-					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
+					monstres.get(indexM).getBouton().prendDegat("Bloqué");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
-					int temp=(joueur.get(indexJ).calcul_competence(competence_choisi))/2;
-					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp/2-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).getBouton().statMAJ();
+					monstres.get(indexM).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 					monstres.get(indexM).setBouclier(0);
 				}
-				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(joueur.get(indexJ).calcul_competence(competence_choisi))/2);
+				else 
+				{
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp/2));
+					monstres.get(indexM).getBouton().prendDegat("-"+temp/2);
+					monstres.get(indexM).getBouton().statMAJ();
+				}
 			}
 			else 
 			{
-				if(monstres.get(indexM).getBouclier()>joueur.get(indexJ).calcul_competence(competence_choisi))
+				if(monstres.get(indexM).getBouclier()>temp)
 				{
-					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-joueur.get(indexJ).calcul_competence(competence_choisi));
+					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
+					monstres.get(indexM).getBouton().prendDegat("Bloqué");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
-					int temp=joueur.get(indexJ).calcul_competence(competence_choisi);
 					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-(temp-monstres.get(indexM).getBouclier()));
+					monstres.get(indexM).getBouton().statMAJ();
+					monstres.get(indexM).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 					monstres.get(indexM).setBouclier(0);
 				}
-				else monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
-				monstres.get(indexM).setHp(monstres.get(indexM).getHp()-joueur.get(indexJ).calcul_competence(competence_choisi));
+				else 
+				{
+					monstres.get(indexM).setHp(monstres.get(indexM).getHp()-temp);
+					monstres.get(indexM).getBouton().prendDegat("-"+temp/2);
+					monstres.get(indexM).getBouton().statMAJ();
+				}
 			}
 			break;
-		}
+			}
 		if(monstres.get(indexM).getHp()<=0) //Mort d'un monstre
 		{
+			monstres.get(indexM).getBouton().Meurt();
 			for(int i=0;i<joueur.size();i++)
 			{
 				if((monstres.get(indexM).getExp_gagne()+joueur.get(i).getExp())>=joueur.get(i).getExp_limit())
 				{
 					joueur.get(i).setExp(monstres.get(indexM).getExp_gagne()-joueur.get(i).getExp_limit());
 					joueur.get(i).levelUp();
+					joueur.get(i).getBouton().statMAJ();
 				}
-				else joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
+				else
+				{
+					joueur.get(i).setExp(monstres.get(indexM).getExp_gagne());
+				}
 			}
 			removeMonstre(indexM);
 		}
@@ -281,26 +355,42 @@ public class Combat {
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
 					joueur.get(indexJ).setBouclier(0);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 				}
-				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+				else 
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+				}
 			}
 			else 
 			{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
 					joueur.get(indexJ).setBouclier(0);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 				}
-				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+				else  
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+				}
 			}
 			break;
 		case 2:
@@ -310,32 +400,49 @@ public class Combat {
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
 					joueur.get(indexJ).setBouclier(0);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 				}
-				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+				else 
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+				}
 			}
 			else 
 			{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
+					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-(temp-joueur.get(indexJ).getBouclier()));
 					joueur.get(indexJ).setBouclier(0);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
 				}
-				else joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+				else  
+				{
+					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
+					joueur.get(indexJ).getBouton().statMAJ();
+					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+				}
 			}
 			break;
 		}
 		if(joueur.get(indexJ).getHp()<=0) 
 			{
 				joueur.get(indexJ).setHp(0);
+				joueur.get(indexJ).getBouton().Meurt();
 				removeJoueur(indexJ); //Mort d'un héros
 			}
 	}
@@ -343,23 +450,37 @@ public class Combat {
 	
 	public void deroulementCombatSoinJ(int indexJ1,int indexJ2,int competence_choisi)
 	{
+		int temp;
 		if(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi)>joueur.get(indexJ2).getHp_max()) 
 		{
+			temp=joueur.get(indexJ2).getHp_max()-joueur.get(indexJ2).getHp();
 			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp_max());
+			joueur.get(indexJ2).getBouton().statMAJ();
+			joueur.get(indexJ2).getBouton().prendDegat("+"+(temp));
 		}
 		else {
-			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi));
+			temp=joueur.get(indexJ1).calcul_competence(competence_choisi);
+			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp()+temp);
+			joueur.get(indexJ2).getBouton().statMAJ();
+			joueur.get(indexJ2).getBouton().prendDegat("+"+(temp));
 		}
 	}
 	
 	public void deroulementCombatSoinM(int indexM1,int indexM2,int competence_alea)
 	{
+		int temp;
 		if(monstres.get(indexM2).getHp()+monstres.get(indexM1).calcul_competence(competence_alea)>monstres.get(indexM2).getHp_max()) 
 		{
+			temp=monstres.get(indexM2).getHp_max()-monstres.get(indexM2).getHp();
 			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp_max());
+			monstres.get(indexM2).getBouton().statMAJ();
+			monstres.get(indexM2).getBouton().prendDegat("+"+(temp));
 		}
 		else {
-			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp()+monstres.get(indexM1).calcul_competence(competence_alea));
+			temp=monstres.get(indexM1).calcul_competence(competence_alea);
+			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp()+temp);
+			monstres.get(indexM2).getBouton().statMAJ();
+			monstres.get(indexM2).getBouton().prendDegat("+"+(temp));
 		}
 	}
 	

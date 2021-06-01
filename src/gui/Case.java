@@ -18,13 +18,4 @@ public class Case extends Rectangle{
         setOpacity(0);
         disponible=true;
     }
-	
-	public void setColor() {
-		setFill(Color.BLACK);
-	}
-	
-	public void setBleu() {
-		setFill(Color.BLUE);
-		setOpacity(0.50);
-	}
 }

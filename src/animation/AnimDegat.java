@@ -19,9 +19,10 @@ public class AnimDegat extends Transition {
 		t= new Text();
 		t.setText(degat);
 		t.setFont(Font.font(30));
-		t.setFill(Color.WHITE);
+		t.setFill(Color.SNOW);
 		t.setOpacity(1);
 		DropShadow ds = new DropShadow();
+		ds.setColor(Color.RED);
 		t.setEffect(ds);
 		t.setMouseTransparent(true);
 		switch (type) {
@@ -33,7 +34,7 @@ public class AnimDegat extends Transition {
 			
 		}
 		root.getChildren().add(t);
-		setCycleDuration(Duration.millis(500));
+		setCycleDuration(Duration.millis(10000));
         setInterpolator(Interpolator.LINEAR);
 	}
 
@@ -41,7 +42,7 @@ public class AnimDegat extends Transition {
 	protected void interpolate(double arg0) {
 		if(t.getOpacity()<=0)stop();
 		else {
-			t.setOpacity(t.getOpacity()-0.03);
+			t.setOpacity(t.getOpacity()-0.01);
 		}
 	}
 	

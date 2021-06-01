@@ -19,7 +19,6 @@ public class PersoImg {
 		this.nom=nom;
 		imgUrl=new File(dossierURL+"/img/perso/"+this.nom).toURI().toString();
 		c= new Case(0,0);
-		c.setColor();
 		b=true;
 	}
 	
@@ -28,7 +27,6 @@ public class PersoImg {
 		this.nom=nom;
 		imgUrl=new File(dossierURL+"/img/perso/"+nom).toURI().toString();
 		this.c = new Case(c.getX(),c.getY());
-		c.setColor();
 		b=true;
 	}
 	

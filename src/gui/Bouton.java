@@ -19,9 +19,11 @@ public class Bouton {
 	protected Text t;
 	protected int x,y;
 	protected boolean b;
+	protected Pane root;
 	
 	public Bouton(Pane root,String text, int x, int y) {
 		this.x=x;this.y=y;
+		this.root=root;
 		String imageURL=new File(dossierURL+"/img/Interface/button1.png").toURI().toString();
 		enter = new Image(imageURL);
 		imageURL=new File(dossierURL+"/img/Interface/button2.png").toURI().toString();
