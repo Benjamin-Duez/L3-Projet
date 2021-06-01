@@ -11,7 +11,7 @@ public class Combat {
 	
 	List<PJ> joueur;
 	List<Monstre> monstres;
-	int tour=0;
+	double tour=1;
 	
 	public void addJoueur(PJ player)
 	{
@@ -58,10 +58,11 @@ public class Combat {
 			for(int i=0;i<joueur.size();i++)
 			{
 				String[] separer=ordre.get(i).split(";");
-				deroulementCombatTour(separer);				
+				tour+=(1/(double)joueur.size());
+				System.out.println(tour);
+				deroulementCombatTour(separer);	
 			}
 		}
-		tour++;
 	}
 	
 	public void deroulementCombatTour(String[] separer)
@@ -118,24 +119,27 @@ public class Combat {
 		
 		}
 		monstres.forEach(item->item.setBouclier(0));
-		for(j=0;j<monstres.size();j++)
+		if(tour==Math.floor(tour))
 		{
-			if(!joueur.isEmpty())
+			for(j=0;j<monstres.size();j++)
 			{
-				int competence_alea= 1 + (int)(Math.random() * ((4 - 1) + 1));
-				if(competence_alea==1||competence_alea==2) 
+				if(!joueur.isEmpty())
 				{
-					int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
-					this.deroulementCombatAttaqueM(j,adversaire_choisi, competence_alea);
-				}
-				else if(competence_alea==3)
-				{
-					int allie_choisi= (int)(Math.random() * ((monstres.size()-1) + 1));
-					this.deroulementCombatSoinM(j,allie_choisi, competence_alea);
-				}
-				else if(competence_alea==4)
-				{
-					monstres.get(j).setBouclier(monstres.get(j).calcul_competence(competence_alea));
+					int competence_alea= 1 + (int)(Math.random() * ((4 - 1) + 1));
+					if(competence_alea==1||competence_alea==2) 
+					{
+						int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
+						this.deroulementCombatAttaqueM(j,adversaire_choisi, competence_alea);
+					}
+					else if(competence_alea==3)
+					{
+						int allie_choisi= (int)(Math.random() * ((monstres.size()-1) + 1));
+						this.deroulementCombatSoinM(j,allie_choisi, competence_alea);
+					}
+					else if(competence_alea==4)
+					{
+						monstres.get(j).setBouclier(monstres.get(j).calcul_competence(competence_alea));
+					}
 				}
 			}
 		}
