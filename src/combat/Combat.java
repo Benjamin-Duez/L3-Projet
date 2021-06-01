@@ -55,66 +55,67 @@ public class Combat {
 		System.out.println("Debut du tour "+tour);
 		if(!joueur.isEmpty()&!monstres.isEmpty())
 		{
-			deroulementCombatTour(ordre);
+			for(int i=0;i<joueur.size();i++)
+			{
+				String[] separer=ordre.get(i).split(";");
+				deroulementCombatTour(separer);				
+			}
 		}
 		tour++;
 	}
 	
-	public void deroulementCombatTour(ArrayList<String> ordre)
+	public void deroulementCombatTour(String[] separer)
 	{
-		int i=0,j=0,i1=0,i2=0;
+		int j=0,i1=0,i2=0;
 		joueur.forEach(item->item.setBouclier(0));
-		for(i=0;i<joueur.size();i++)
+		if(!monstres.isEmpty())
 		{
-			if(!monstres.isEmpty())
+			System.out.println(separer[0]);
+			switch(separer[0])
 			{
-				String[] separer=ordre.get(i).split(";");
-				System.out.println(separer[0]);
-				switch(separer[0])
-				{
-				case "cac":i1=0;break;
-				case "tank":i1=1;break;
-				case "sorcier":i1=2;break;
-				case "pretre":i1=3;break;
-				}
-				int numero_competence=0;
-				switch(separer[1])
-				{
-				case "Attaque":numero_competence=1;break;
-				case "Magie":numero_competence=2;break;
-				case "Soin":numero_competence=3;break;
-				case "Défense":numero_competence=4;break;
-				}
-				
-				if(numero_competence==1||numero_competence==2) 
-				{
-					switch(separer[2])
-					{
-					case "monstre 0":i2=0;break;
-					case "monstre 1":i2=1;break;
-					case "monstre 2":i2=2;break;
-					case "monstre 3":i2=3;break;
-					}
-					if(i2>monstres.size()-1)i2=0;
-					this.deroulementCombatAttaqueJ(i1,i2, numero_competence);
-				}
-				else if(numero_competence==3)
-				{
-					switch(separer[2])
-					{
-					case "cac":i2=0;break;
-					case "tank":i2=1;break;
-					case "sorcier":i2=2;break;
-					case "pretre":i2=3;break;
-					}
-					if(i2>joueur.size()-1)i2=0;
-					this.deroulementCombatSoinJ(i1,i2, numero_competence);
-				}
-				else if(numero_competence==4)
-				{
-					joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
-				}
+			case "cac":i1=0;break;
+			case "tank":i1=1;break;
+			case "sorcier":i1=2;break;
+			case "pretre":i1=3;break;
 			}
+			int numero_competence=0;
+			switch(separer[1])
+			{
+			case "Attaque":numero_competence=1;break;
+			case "Magie":numero_competence=2;break;
+			case "Soin":numero_competence=3;break;
+			case "Défense":numero_competence=4;break;
+			}
+			
+			if(numero_competence==1||numero_competence==2) 
+			{
+				switch(separer[2])
+				{
+				case "monstre 0":i2=0;break;
+				case "monstre 1":i2=1;break;
+				case "monstre 2":i2=2;break;
+				case "monstre 3":i2=3;break;
+				}
+				if(i2>monstres.size()-1)i2=0;
+				this.deroulementCombatAttaqueJ(i1,i2, numero_competence);
+			}
+			else if(numero_competence==3)
+			{
+				switch(separer[2])
+				{
+				case "cac":i2=0;break;
+				case "tank":i2=1;break;
+				case "sorcier":i2=2;break;
+				case "pretre":i2=3;break;
+				}
+				if(i2>joueur.size()-1)i2=0;
+				this.deroulementCombatSoinJ(i1,i2, numero_competence);
+			}
+			else if(numero_competence==4)
+			{
+				joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
+			}
+		
 		}
 		monstres.forEach(item->item.setBouclier(0));
 		for(j=0;j<monstres.size();j++)
@@ -138,9 +139,7 @@ public class Combat {
 				}
 			}
 		}
-		System.out.println(this);
-		}
-	
+	}
 	
 	public void deroulementCombatAttaqueJ(int indexJ,int indexM,int competence_choisi) //Perte de vie d'un monstre
 	{
