@@ -16,7 +16,7 @@ public class Combat{
 	List<PJ> joueur;
 	List<Monstre> monstres;
 	ArrayList<String> ordreJ;
-	ArrayList<String> ordreM;
+	List<String> ordreM;
 	Timeline littleCycle;	
 	boolean phase;
 
@@ -46,15 +46,15 @@ public class Combat{
 	/**
 	 * pour l'instant c'est du brouillon
 	 * 
-	 * attaque physique = (0.9*ATT + réussite(PRE)) * ATT(Spell)		PRE = précision de l'arme
-	 * attaque magique = (0.8*MAG + 0.1*ESP + réussite(PRE)) * MAG(Spell)
+	 * attaque physique = (0.9*ATT + rÃ©ussite(PRE)) * ATT(Spell)		PRE = prÃ©cision de l'arme
+	 * attaque magique = (0.8*MAG + 0.1*ESP + rÃ©ussite(PRE)) * MAG(Spell)
 	 * 
-	 *  soins prodigués = (0.85*ESP + 0.05 MAG) * ESP(Spell)
+	 *  soins prodiguÃ©s = (0.85*ESP + 0.05 MAG) * ESP(Spell)
 	 *  
-	 *  dégats reçus physique = si (dégats reçus < ARM) alors HP = HP - 0.5 * dégats reçuts
-	 *  						sinon HP = HP - 0.9 * dégats reçus
+	 *  dÃ©gats reÃ§us physique = si (dÃ©gats reÃ§us < ARM) alors HP = HP - 0.5 * dÃ©gats reÃ§uts
+	 *  						sinon HP = HP - 0.9 * dÃ©gats reÃ§us
 	 *  
-	 *  pareil pour les dégats reçus magique mais par rapport à ESP
+	 *  pareil pour les dÃ©gats reÃ§us magique mais par rapport Ã  ESP
 	 */
 	public void ordreMonstre(int taille)
 	{
@@ -74,7 +74,7 @@ public class Combat{
 				int allie_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
 				test="monstre "+i+";Soin;monstre "+allie_choisi;
 			}
-			else test="monstre "+i+";Défense";
+			else test="monstre "+i+";DÃ©fense";
 			ordreM.add(test);
 		}
 	}
@@ -116,7 +116,7 @@ public class Combat{
                 	else {
                 		if(monstres.isEmpty()) {
                 			littleCycle.stop();
-                			System.out.println("Vous avez gagné");
+                			System.out.println("Vous avez gagnÃ©");
                 			AnimVictoire anim=new AnimVictoire(joueur);
                 			anim.lancerAnim();
                 		}
@@ -178,7 +178,7 @@ public class Combat{
 			case "Attaque":numero_competence=1;joueur.get(i1).getBouton().incanteAttaque();break;
 			case "Magie":numero_competence=2;joueur.get(i1).getBouton().incanteMagie();break;
 			case "Soin":numero_competence=3;joueur.get(i1).getBouton().incanteSoin();break;
-			case "Défense":numero_competence=4;joueur.get(i1).getBouton().incanteDéfense();break;
+			case "DÃ©fense":numero_competence=4;joueur.get(i1).getBouton().incanteDÃ©fense();break;
 			}
 			
 			if(numero_competence==1||numero_competence==2) 
@@ -264,7 +264,7 @@ public class Combat{
 			else if(numero_competence==4)
 			{
 				joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
-				joueur.get(i1).getBouton().lanceDéfense();
+				joueur.get(i1).getBouton().lanceDÃ©fense();
 			}
 		}
 	}
@@ -311,7 +311,7 @@ public class Combat{
 			case "Attaque":competence_alea=1;break;
 			case "Magie":competence_alea=2;break;
 			case "Soin":competence_alea=3;break;
-			case "Défense":competence_alea=4;break;
+			case "DÃ©fense":competence_alea=4;break;
 			}
 			if(competence_alea==1||competence_alea==2) 
 			{
@@ -412,7 +412,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -433,7 +433,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -457,7 +457,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -478,7 +478,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -516,7 +516,7 @@ public class Combat{
 		}
 	}
 
-	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un héros
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un hÃ©ros
 	{
 		int temp=monstres.get(indexM).calcul_competence(competence_alea);
 		switch(competence_alea)
@@ -528,7 +528,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -540,7 +540,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 				else 
@@ -552,7 +552,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 			}
@@ -561,7 +561,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -573,7 +573,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 				else  
@@ -585,7 +585,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 			}
@@ -597,7 +597,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -609,7 +609,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 				else 
@@ -621,7 +621,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 			}
@@ -630,7 +630,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -642,7 +642,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 				else  
@@ -654,7 +654,7 @@ public class Combat{
 					{
 						joueur.get(indexJ).setHp(0);
 						joueur.get(indexJ).getBouton().Meurt();
-						removeJoueur(indexJ); //Mort d'un héros
+						removeJoueur(indexJ); //Mort d'un hÃ©ros
 					}
 				}
 			}
