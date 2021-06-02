@@ -45,15 +45,15 @@ public class Combat{
 	/**
 	 * pour l'instant c'est du brouillon
 	 * 
-	 * attaque physique = (0.9*ATT + réussite(PRE)) * ATT(Spell)		PRE = précision de l'arme
-	 * attaque magique = (0.8*MAG + 0.1*ESP + réussite(PRE)) * MAG(Spell)
+	 * attaque physique = (0.9*ATT + rÃ©ussite(PRE)) * ATT(Spell)		PRE = prÃ©cision de l'arme
+	 * attaque magique = (0.8*MAG + 0.1*ESP + rÃ©ussite(PRE)) * MAG(Spell)
 	 * 
-	 *  soins prodigués = (0.85*ESP + 0.05 MAG) * ESP(Spell)
+	 *  soins prodiguÃ©s = (0.85*ESP + 0.05 MAG) * ESP(Spell)
 	 *  
-	 *  dégats reçus physique = si (dégats reçus < ARM) alors HP = HP - 0.5 * dégats reçuts
-	 *  						sinon HP = HP - 0.9 * dégats reçus
+	 *  dÃ©gats reÃ§us physique = si (dÃ©gats reÃ§us < ARM) alors HP = HP - 0.5 * dÃ©gats reÃ§uts
+	 *  						sinon HP = HP - 0.9 * dÃ©gats reÃ§us
 	 *  
-	 *  pareil pour les dégats reçus magique mais par rapport à ESP
+	 *  pareil pour les dÃ©gats reÃ§us magique mais par rapport Ã  ESP
 	 */
 	public void ordreMonstre(int taille)
 	{
@@ -65,15 +65,15 @@ public class Combat{
 			if(competence_alea==1||competence_alea==2)
 			{
 				int adversaire_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
-				if(competence_alea==1) test=i+";Attaque;joueur "+adversaire_choisi;
-				else test=i+";Magie;joueur "+adversaire_choisi;
+				if(competence_alea==1) test="monstre "+i+";Attaque;joueur "+adversaire_choisi;
+				else test="monstre "+i+";Magie;joueur "+adversaire_choisi;
 			}
 			else if(competence_alea==3)
 			{
 				int allie_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
-				test=i+";Soin;monstre "+allie_choisi;
+				test="monstre "+i+";Soin;monstre "+allie_choisi;
 			}
-			else test=i+";Défense";
+			else test="monstre "+i+";DÃ©fense";
 			ordreM.add(test);
 		}
 	}
@@ -126,35 +126,90 @@ public class Combat{
 	
 	public void deroulementCombatTourJ(String[] separer)
 	{
-		int i1=0,i2=0;
+		int i1=-1,i2=-1,k=0,numero_competence=0;
 		joueur.forEach(item->item.setBouclier(0));
 		if(!monstres.isEmpty())
 		{
 			System.out.println(separer[0]);
 			switch(separer[0])
 			{
-			case "cac":i1=0;break;
-			case "tank":i1=1;break;
-			case "sorcier":i1=2;break;
-			case "pretre":i1=3;break;
+			case "cac":
+				while(k<joueur.size())
+				{
+					if(joueur.get(k).getClass()==etre.CaC.class)i1=k++;
+					else k++;
+				}
+				k=0;
+				break;
+			case "tank":
+				while(k<joueur.size())
+				{
+					if(joueur.get(k).getClass()==etre.Tank.class)i1=k++;
+					else k++;
+				}
+				k=0;
+				break;
+			case "sorcier":
+				while(k<joueur.size())
+				{
+					if(joueur.get(k).getClass()==etre.Sorcier.class)i1=k++;
+					else k++;
+				}
+				k=0;
+				break;
+			case "pretre":
+				while(k<joueur.size())
+				{
+					if(joueur.get(k).getClass()==etre.Pretre.class)i1=k++;
+					else k++;
+				}
+				k=0;
+				break;
 			}
-			int numero_competence=0;
 			switch(separer[1])
 			{
 			case "Attaque":numero_competence=1;break;
 			case "Magie":numero_competence=2;break;
 			case "Soin":numero_competence=3;break;
-			case "Défense":numero_competence=4;break;
+			case "DÃ©fense":numero_competence=4;break;
 			}
 			
 			if(numero_competence==1||numero_competence==2) 
 			{
 				switch(separer[2])
 				{
-				case "monstre 0":i2=0;break;
-				case "monstre 1":i2=1;break;
-				case "monstre 2":i2=2;break;
-				case "monstre 3":i2=3;break;
+				case "monstre 0":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Loup.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 1":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Squelette.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 2":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Licorne.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 3":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Sorciere.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
 				}
 				if(i2>monstres.size()-1)i2=0;
 				this.deroulementCombatAttaqueJ(i1,i2, numero_competence);
@@ -163,10 +218,38 @@ public class Combat{
 			{
 				switch(separer[2])
 				{
-				case "cac":i2=0;break;
-				case "tank":i2=1;break;
-				case "sorcier":i2=2;break;
-				case "pretre":i2=3;break;
+				case "cac":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.CaC.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "tank":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Tank.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "sorcier":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Sorcier.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "pretre":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Pretre.class)i2=k++;
+						else k++;
+					}
+					k=0;
+					break;
 				}
 				if(i2>joueur.size()-1)i2=0;
 				this.deroulementCombatSoinJ(i1,i2, numero_competence);
@@ -180,33 +263,85 @@ public class Combat{
 	
 	public void deroulementCombatTourM(String[] separer)
 	{
-		int competence_alea=0,j1=0,j2=0;
+		int competence_alea=0,j1=-1,j2=-1,k=0;
 		monstres.forEach(item->item.setBouclier(0));
 		if(!joueur.isEmpty())
 		{
 			switch(separer[0])
 			{
-			case"0":j1=0;break;
-			case"1":j1=1;break;
-			case"2":j1=2;break;
-			case"3":j1=3;break;
+			case"monstre 0":
+				while(k<monstres.size())
+				{
+					if(monstres.get(k).getClass()==etre.Loup.class)j1=k++;
+					else k++;
+				}
+				k=0;
+			case"monstre 1":
+				while(k<monstres.size())
+				{
+					if(monstres.get(k).getClass()==etre.Squelette.class)j1=k++;
+					else k++;
+				}
+				k=0;
+			case"monstre 2":
+				while(k<monstres.size())
+				{
+					if(monstres.get(k).getClass()==etre.Licorne.class)j1=k++;
+					else k++;
+				}
+				k=0;
+			case"monstre 3":
+				while(k<monstres.size())
+				{
+					if(monstres.get(k).getClass()==etre.Sorciere.class)j1=k++;
+					else k++;
+				}
+				k=0;
 			}
 			switch(separer[1])
 			{
 			case "Attaque":competence_alea=1;break;
 			case "Magie":competence_alea=2;break;
 			case "Soin":competence_alea=3;break;
-			case "Défense":competence_alea=4;break;
+			case "DÃ©fense":competence_alea=4;break;
 			}
 			if(competence_alea==1||competence_alea==2) 
 			{
 				switch(separer[2])
 				{
-				case "joueur 0":j2=0;break;
-				case "joueur 1":j2=1;break;
-				case "joueur 2":j2=2;break;
-				case "joueur 3":j2=3;break;
-				}	
+				case "joueur 0":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.CaC.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "joueur 1":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Tank.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "joueur 2":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Sorcier.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "joueur 3":
+					while(k<joueur.size())
+					{
+						if(joueur.get(k).getClass()==etre.Pretre.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				}
 				if(j2>joueur.size()-1)j2=0;
 				this.deroulementCombatAttaqueM(j1,j2, competence_alea);
 			}
@@ -214,10 +349,38 @@ public class Combat{
 			{
 				switch(separer[2])
 				{
-				case "monstre 0":j2=0;break;
-				case "monstre 1":j2=1;break;
-				case "monstre 2":j2=2;break;
-				case "monstre 3":j2=3;break;
+				case "monstre 0":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Loup.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 1":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Squelette.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 2":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Licorne.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
+				case "monstre 3":
+					while(k<monstres.size())
+					{
+						if(monstres.get(k).getClass()==etre.Sorciere.class)j2=k++;
+						else k++;
+					}
+					k=0;
+					break;
 				}
 				if(j2>monstres.size()-1)j2=0;
 				this.deroulementCombatSoinM(j1,j2, competence_alea);
@@ -240,7 +403,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -261,7 +424,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -284,7 +447,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -305,7 +468,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqué");
+					monstres.get(indexM).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -343,7 +506,7 @@ public class Combat{
 		}
 	}
 
-	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un héros
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un hÃ©ros
 	{
 		int temp=monstres.get(indexM).calcul_competence(competence_alea);
 		switch(competence_alea)
@@ -355,7 +518,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -376,7 +539,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -400,7 +563,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -421,7 +584,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqué");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÃ©");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -443,7 +606,7 @@ public class Combat{
 			{
 				joueur.get(indexJ).setHp(0);
 				joueur.get(indexJ).getBouton().Meurt();
-				removeJoueur(indexJ); //Mort d'un héros
+				removeJoueur(indexJ); //Mort d'un hÃ©ros
 			}
 	}
 
