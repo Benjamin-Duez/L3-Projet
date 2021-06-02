@@ -361,13 +361,13 @@ public class MyFantasy extends Application{
 		{
 		case "m":
 			anim=new AnimMortM(tabM.get(0).getImgV());
-			anim2=new AnimDegat(root,"-9999",tabM.get(0).getImgV(),"monstre");
+			anim2=new AnimDegat(root,"-9999",tabM.get(0).getImgV(),"monstre",true);
 			anim2.lancerAnim();
 			anim.lancerAnim();
 			tabM.get(0).Meurt();
 			break;
 		case "p":
-			anim2=new AnimDegat(root,"-9999",tabP.get(1).getImgV(),"perso");
+			anim2=new AnimDegat(root,"-9999",tabP.get(1).getImgV(),"perso",true);
 			tabP.get(1).getPerso().setHp(tabP.get(1).getPerso().getHp()-9999);
 			tabP.get(1).statMAJ();
 			anim2.lancerAnim();

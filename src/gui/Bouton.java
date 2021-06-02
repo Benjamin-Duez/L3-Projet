@@ -85,6 +85,10 @@ public class Bouton {
 		return t.getText();
 	}
 	
+	public Pane getRoot() {
+		return root;
+	}
+	
 	public void setMouseTransparent(boolean b) {
 		imgV.setMouseTransparent(b);
 	}

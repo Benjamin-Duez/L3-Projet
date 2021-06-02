@@ -38,7 +38,12 @@ public class BoutonMonstre extends BoutonEtre {
 	
 	@Override
 	public void prendDegat(String degat) {
-		AnimDegat anim=new AnimDegat(root,degat,imgV,"monstre");
+		AnimDegat anim=new AnimDegat(root,degat,imgV,"monstre",true);
+		anim.lancerAnim();
+	}
+	
+	public void prendSoin(String montant) {
+		AnimDegat anim=new AnimDegat(root,montant,imgV,"perso",false);
 		anim.lancerAnim();
 	}
 	

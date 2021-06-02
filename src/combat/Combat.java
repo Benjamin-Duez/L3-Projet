@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import animation.AnimVictoire;
 import etre.Monstre;
 import etre.PJ;
 import javafx.animation.KeyFrame;
@@ -45,15 +46,15 @@ public class Combat{
 	/**
 	 * pour l'instant c'est du brouillon
 	 * 
-	 * attaque physique = (0.9*ATT + r√©ussite(PRE)) * ATT(Spell)		PRE = pr√©cision de l'arme
-	 * attaque magique = (0.8*MAG + 0.1*ESP + r√©ussite(PRE)) * MAG(Spell)
+	 * attaque physique = (0.9*ATT + rÈussite(PRE)) * ATT(Spell)		PRE = prÈcision de l'arme
+	 * attaque magique = (0.8*MAG + 0.1*ESP + rÈussite(PRE)) * MAG(Spell)
 	 * 
-	 *  soins prodigu√©s = (0.85*ESP + 0.05 MAG) * ESP(Spell)
+	 *  soins prodiguÈs = (0.85*ESP + 0.05 MAG) * ESP(Spell)
 	 *  
-	 *  d√©gats re√ßus physique = si (d√©gats re√ßus < ARM) alors HP = HP - 0.5 * d√©gats re√ßuts
-	 *  						sinon HP = HP - 0.9 * d√©gats re√ßus
+	 *  dÈgats reÁus physique = si (dÈgats reÁus < ARM) alors HP = HP - 0.5 * dÈgats reÁuts
+	 *  						sinon HP = HP - 0.9 * dÈgats reÁus
 	 *  
-	 *  pareil pour les d√©gats re√ßus magique mais par rapport √† ESP
+	 *  pareil pour les dÈgats reÁus magique mais par rapport ‡ ESP
 	 */
 	public void ordreMonstre(int taille)
 	{
@@ -73,7 +74,7 @@ public class Combat{
 				int allie_choisi= (int)(Math.random() * ((joueur.size()-1) + 1));	
 				test="monstre "+i+";Soin;monstre "+allie_choisi;
 			}
-			else test="monstre "+i+";D√©fense";
+			else test="monstre "+i+";DÈfense";
 			ordreM.add(test);
 		}
 	}
@@ -113,6 +114,12 @@ public class Combat{
 	        			}
         			}
                 	else {
+                		if(monstres.isEmpty()) {
+                			littleCycle.stop();
+                			System.out.println("Vous avez gagnÈ");
+                			AnimVictoire anim=new AnimVictoire(joueur);
+                			anim.lancerAnim();
+                		}
                 		
                 	}
                 }));
@@ -168,10 +175,10 @@ public class Combat{
 			}
 			switch(separer[1])
 			{
-			case "Attaque":numero_competence=1;break;
-			case "Magie":numero_competence=2;break;
-			case "Soin":numero_competence=3;break;
-			case "D√©fense":numero_competence=4;break;
+			case "Attaque":numero_competence=1;joueur.get(i1).getBouton().incanteAttaque();break;
+			case "Magie":numero_competence=2;joueur.get(i1).getBouton().incanteMagie();break;
+			case "Soin":numero_competence=3;joueur.get(i1).getBouton().incanteSoin();break;
+			case "DÈfense":numero_competence=4;joueur.get(i1).getBouton().incanteDÈfense();break;
 			}
 			
 			if(numero_competence==1||numero_competence==2) 
@@ -211,7 +218,7 @@ public class Combat{
 					k=0;
 					break;
 				}
-				if(i2>monstres.size()-1)i2=0;
+				if((i2>monstres.size()-1)||(i2==-1))i2=0;
 				this.deroulementCombatAttaqueJ(i1,i2, numero_competence);
 			}
 			else if(numero_competence==3)
@@ -251,12 +258,13 @@ public class Combat{
 					k=0;
 					break;
 				}
-				if(i2>joueur.size()-1)i2=0;
+				if((i2>joueur.size()-1)||(i2==-1))i2=0;
 				this.deroulementCombatSoinJ(i1,i2, numero_competence);
 			}
 			else if(numero_competence==4)
 			{
 				joueur.get(i1).setBouclier(joueur.get(i1).calcul_competence(numero_competence));
+				joueur.get(i1).getBouton().lanceDÈfense();
 			}
 		}
 	}
@@ -303,7 +311,7 @@ public class Combat{
 			case "Attaque":competence_alea=1;break;
 			case "Magie":competence_alea=2;break;
 			case "Soin":competence_alea=3;break;
-			case "D√©fense":competence_alea=4;break;
+			case "DÈfense":competence_alea=4;break;
 			}
 			if(competence_alea==1||competence_alea==2) 
 			{
@@ -342,7 +350,7 @@ public class Combat{
 					k=0;
 					break;
 				}
-				if(j2>joueur.size()-1)j2=0;
+				if((j2>joueur.size()-1)||(j2==-1))j2=0;
 				this.deroulementCombatAttaqueM(j1,j2, competence_alea);
 			}
 			else if(competence_alea==3)
@@ -382,7 +390,7 @@ public class Combat{
 					k=0;
 					break;
 				}
-				if(j2>monstres.size()-1)j2=0;
+				if((j2>monstres.size()-1)||(j2==-1))j2=0;
 				this.deroulementCombatSoinM(j1,j2, competence_alea);
 			}
 			else if(competence_alea==4)
@@ -398,12 +406,13 @@ public class Combat{
 		switch(competence_choisi)
 		{
 		case 1:
+			joueur.get(indexJ).getBouton().lanceAttaque();
 			if(monstres.get(indexM).getArm()>=joueur.get(indexJ).getAtt())
 			{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqu√©");
+					monstres.get(indexM).getBouton().prendDegat("BloquÈ");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -424,7 +433,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqu√©");
+					monstres.get(indexM).getBouton().prendDegat("BloquÈ");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -442,12 +451,13 @@ public class Combat{
 			}
 			break;
 		case 2:
+			joueur.get(indexJ).getBouton().lanceMagie();
 			if(monstres.get(indexM).getEsp()>=joueur.get(indexJ).getMag())
 			{
 				if(monstres.get(indexM).getBouclier()>(temp/2))
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-(temp/2));
-					monstres.get(indexM).getBouton().prendDegat("Bloqu√©");
+					monstres.get(indexM).getBouton().prendDegat("BloquÈ");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -468,7 +478,7 @@ public class Combat{
 				if(monstres.get(indexM).getBouclier()>temp)
 				{
 					monstres.get(indexM).setBouclier(monstres.get(indexM).getBouclier()-temp);
-					monstres.get(indexM).getBouton().prendDegat("Bloqu√©");
+					monstres.get(indexM).getBouton().prendDegat("BloquÈ");
 				}
 				else if(monstres.get(indexM).getBouclier()!=0)
 				{
@@ -506,7 +516,7 @@ public class Combat{
 		}
 	}
 
-	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un h√©ros
+	public void deroulementCombatAttaqueM(int indexM,int indexJ,int competence_alea) //perte de vie d'un hÈros
 	{
 		int temp=monstres.get(indexM).calcul_competence(competence_alea);
 		switch(competence_alea)
@@ -518,7 +528,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqu√©");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÈ");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -526,12 +536,24 @@ public class Combat{
 					joueur.get(indexJ).setBouclier(0);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 				else 
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 			}
 			else 
@@ -539,7 +561,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqu√©");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÈ");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -547,12 +569,24 @@ public class Combat{
 					joueur.get(indexJ).setBouclier(0);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 				else  
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 			}
 			break;
@@ -563,7 +597,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqu√©");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÈ");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -571,12 +605,24 @@ public class Combat{
 					joueur.get(indexJ).setBouclier(0);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 				else 
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 			}
 			else 
@@ -584,7 +630,7 @@ public class Combat{
 				if(joueur.get(indexJ).getBouclier()>temp)
 				{
 					joueur.get(indexJ).setBouclier(joueur.get(indexJ).getBouclier()-temp);
-					joueur.get(indexJ).getBouton().prendDegat("Bloqu√©");
+					joueur.get(indexJ).getBouton().prendDegat("BloquÈ");
 				}
 				else if(joueur.get(indexJ).getBouclier()!=0)
 				{
@@ -592,40 +638,47 @@ public class Combat{
 					joueur.get(indexJ).setBouclier(0);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp/2-monstres.get(indexM).getBouclier()));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 				else  
 				{
 					joueur.get(indexJ).setHp(joueur.get(indexJ).getHp()-temp);
 					joueur.get(indexJ).getBouton().statMAJ();
 					joueur.get(indexJ).getBouton().prendDegat("-"+(temp));
+					if(joueur.get(indexJ).getHp()<=0) 
+					{
+						joueur.get(indexJ).setHp(0);
+						joueur.get(indexJ).getBouton().Meurt();
+						removeJoueur(indexJ); //Mort d'un hÈros
+					}
 				}
 			}
 			break;
 		}
-		if(joueur.get(indexJ).getHp()<=0) 
-			{
-				joueur.get(indexJ).setHp(0);
-				joueur.get(indexJ).getBouton().Meurt();
-				removeJoueur(indexJ); //Mort d'un h√©ros
-			}
 	}
 
 	
 	public void deroulementCombatSoinJ(int indexJ1,int indexJ2,int competence_choisi)
 	{
 		int temp;
+		joueur.get(indexJ1).getBouton().lanceSoin();
 		if(joueur.get(indexJ2).getHp()+joueur.get(indexJ1).calcul_competence(competence_choisi)>joueur.get(indexJ2).getHp_max()) 
 		{
 			temp=joueur.get(indexJ2).getHp_max()-joueur.get(indexJ2).getHp();
 			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp_max());
 			joueur.get(indexJ2).getBouton().statMAJ();
-			joueur.get(indexJ2).getBouton().prendDegat("+"+(temp));
+			joueur.get(indexJ2).getBouton().prendSoin("+"+(temp));
 		}
 		else {
 			temp=joueur.get(indexJ1).calcul_competence(competence_choisi);
 			joueur.get(indexJ2).setHp(joueur.get(indexJ2).getHp()+temp);
 			joueur.get(indexJ2).getBouton().statMAJ();
-			joueur.get(indexJ2).getBouton().prendDegat("+"+(temp));
+			joueur.get(indexJ2).getBouton().prendSoin("+"+(temp));
 		}
 	}
 	
@@ -637,13 +690,13 @@ public class Combat{
 			temp=monstres.get(indexM2).getHp_max()-monstres.get(indexM2).getHp();
 			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp_max());
 			monstres.get(indexM2).getBouton().statMAJ();
-			monstres.get(indexM2).getBouton().prendDegat("+"+(temp));
+			monstres.get(indexM2).getBouton().prendSoin("+"+(temp));
 		}
 		else {
 			temp=monstres.get(indexM1).calcul_competence(competence_alea);
 			monstres.get(indexM2).setHp(monstres.get(indexM2).getHp()+temp);
 			monstres.get(indexM2).getBouton().statMAJ();
-			monstres.get(indexM2).getBouton().prendDegat("+"+(temp));
+			monstres.get(indexM2).getBouton().prendSoin("+"+(temp));
 		}
 	}
 	

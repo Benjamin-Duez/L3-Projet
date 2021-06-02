@@ -5,6 +5,7 @@ import java.io.File;
 import animation.AnimDegat;
 import animation.AnimMort;
 import animation.AnimMortP;
+import animation.AnimPerso;
 import etre.PJ;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.effect.DropShadow;
@@ -20,6 +21,7 @@ public class BoutonPerso extends BoutonEtre {
 	protected ImageView inter;
 	protected Text nomImg,hpImg,mpImg;
 	protected PJ perso;
+	private AnimPerso anim;
 	
 	public BoutonPerso(Pane root, int x, int y,int x2 ,int y2, String nom, PJ perso) {
 		super(root, nom, x, y,nom);
@@ -69,6 +71,9 @@ public class BoutonPerso extends BoutonEtre {
 		t.setOpacity(0);
 		vivant=true;occ=false;
 		
+		anim=new AnimPerso(this.imgV);
+		anim.lancerAnim();
+		
 		inter.setOnMouseEntered(e5->mouseEnter());
 		inter.setOnMouseExited(e6->mouseExited());
 		inter.setOnMousePressed(e7->mousePressed());
@@ -80,23 +85,81 @@ public class BoutonPerso extends BoutonEtre {
 		setMouseTransparent(false);
 	}
 	
+	public void incanteMagie() {
+		anim.setAction("incantationMagie");
+		anim.setIndex();
+	}
+	
+	public void incanteAttaque() {
+		anim.setAction("base");
+		anim.setIndex();
+	}
+	
+	public void incanteDéfense() {
+		anim.setAction("incantationDéfense");
+		anim.setIndex();
+	}
+	
+	public void incanteSoin() {
+		anim.setAction("incantationSoin");
+		anim.setIndex();
+	}
+	
+	public void lanceMagie() {
+		anim.setAction("magie");
+		anim.setIndex();
+	}
+	
+	public void lanceAttaque() {
+		anim.setAction("attaque");
+		anim.setIndex();
+	}
+	
+	public void lanceDéfense() {
+		anim.setAction("défense");
+		anim.setIndex();
+	}
+	
+	public void lanceSoin() {
+		anim.setAction("soin");
+		anim.setIndex();
+	}
+	
+	public void lanceVictoire() {
+		anim.setAction("victoire");
+		anim.setIndex();
+	}
+	
 	public void statMAJ() {
 		if(perso.getHp()<=0) {
-			AnimMort anim;
-			anim=new AnimMortP(imgV);
-			anim.lancerAnim();
 			Meurt();
 		}
 		hpImg.setText(perso.getHp()+"/"+perso.getHp_max()+" Hp");
 		mpImg.setText(perso.getMp()+"/"+perso.getMp_max()+" Mp");
 	}
+
+	@Override
+	public void Meurt() {
+		vivant=false;
+		anim.setEtat("mort");
+		anim.setIndex();
+	}
 	
 	@Override
 	public void prendDegat(String degat) {
-		AnimDegat anim=new AnimDegat(root,degat,imgV,"perso");
-		anim.lancerAnim();
+		AnimDegat animD=new AnimDegat(root,degat,imgV,"perso",true);
+		animD.lancerAnim();
+		anim.setIndex();
+		anim.setAction("degat");
+		if(perso.getHp()<=perso.getHp_max()/4) {
+			anim.setEtat("blessé");
+		}
 	}
 	
+	public void prendSoin(String montant) {
+		AnimDegat anim=new AnimDegat(root,montant,imgV,"perso",false);
+		anim.lancerAnim();
+	}
 	public PJ getPerso() {
 		return perso;
 	}

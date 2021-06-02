@@ -3,7 +3,7 @@ package gui;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class BoutonEtre extends Bouton  {
+public abstract class BoutonEtre extends Bouton  {
 
 	protected String nom;
 	public ImageView pointer;
